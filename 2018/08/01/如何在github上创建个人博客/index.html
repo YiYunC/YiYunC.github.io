@@ -16,10 +16,12 @@
 <meta property="og:site_name" content="YiYunC blog">
 <meta property="og:description" content="第一次搭建个人博客，遇到了很多坑，记录下搭建的过程。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.creativecommons.org/l/by/4.0/88x31.png">
 <meta property="og:updated_time" content="2018-08-01T15:37:11.803Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在github上创建个人博客">
 <meta name="twitter:description" content="第一次搭建个人博客，遇到了很多坑，记录下搭建的过程。">
+<meta name="twitter:image" content="https://i.creativecommons.org/l/by/4.0/88x31.png">
   
   
     <link rel="icon" href="/favicon.png">
@@ -34,6 +36,16 @@
   
 
   
+<script>
+var _hmt = _hmt || [];
+(function() {
+	var hm = document.createElement("script");
+	hm.src = "https://hm.baidu.com/hm.js?c8e691aa9d1846a748bdd42d90a410f7";
+	var s = document.getElementsByTagName("script")[0]; 
+	s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
 
 </head>
 
@@ -52,7 +64,7 @@
 		  <h1 class="header-author"><a href="/">YiYunC</a></h1>
 		</hgroup>
 		
-		<p class="header-subtitle">Linux/Android驱动</p>
+		<p class="header-subtitle">嵌入式/Linux驱动</p>
 		
 
 		<nav class="header-menu">
@@ -82,7 +94,9 @@
 				
 					<a class="github" target="_blank" href="https://github.com/YiYunC" title="github"><i class="icon-github"></i></a>
 		        
-					<a class="google" target="_blank" href="/chenyiyun940920@gmail.com" title="google"><i class="icon-google"></i></a>
+					<a class="weibo" target="_blank" href="/陈某某Yyc" title="weibo"><i class="icon-weibo"></i></a>
+		        
+					<a class="mail" target="_blank" href="/chenyiyun940920@gmail.com" title="mail"><i class="icon-mail"></i></a>
 		        
 			</div>
 		</nav>
@@ -106,7 +120,7 @@
 			  <h1 class="header-author js-header-author">YiYunC</h1>
 			</hgroup>
 			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>Linux/Android驱动<i class="icon icon-quo-right"></i></p>
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>嵌入式/Linux驱动<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -121,7 +135,9 @@
 					
 						<a class="github" target="_blank" href="https://github.com/YiYunC" title="github"><i class="icon-github"></i></a>
 			        
-						<a class="google" target="_blank" href="/chenyiyun940920@gmail.com" title="google"><i class="icon-google"></i></a>
+						<a class="weibo" target="_blank" href="/陈某某Yyc" title="weibo"><i class="icon-weibo"></i></a>
+			        
+						<a class="mail" target="_blank" href="/chenyiyun940920@gmail.com" title="mail"><i class="icon-mail"></i></a>
 			        
 				</div>
 			</nav>
@@ -176,7 +192,7 @@
 <hr>
 <p>搭建过程虽然提前看了很多教程，却还是遇到了很多坑。</p>
 <hr>
-<p>�������ӣ�<a href="https://yiyunc.me/2018/08/01/如何在github上创建个人博客/">https://yiyunc.me/2018/08/01/如何在github上创建个人博客/</a></p>
+<p><a rel="noopener" href="http://creativecommons.org/licenses/by/4.0/" target="_blank"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png"><br></a><br>本作品采用<a rel="noopener" href="http://creativecommons.org/licenses/by/4.0/" target="_blank">知识共享署名 4.0 国际许可协议</a>进行许可。<br>�������ӣ�<a href="https://yiyunc.me/2018/08/01/如何在github上创建个人博客/">https://yiyunc.me/2018/08/01/如何在github上创建个人博客/</a></p>
 
       
 
@@ -328,6 +344,17 @@
     </div>
   </div>
 </footer>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+  ��վ�ܷ�����<span id="busuanzi_value_site_pv"></span>��
+</span>
+
+<span id="busuanzi_container_site_uv">
+  �ܷÿ���<span id="busuanzi_value_site_uv"></span>�˴�
+</span>
     </div>
     <script>
 	var yiliaConfig = {
@@ -397,10 +424,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">其他</a>
-              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">github</a>

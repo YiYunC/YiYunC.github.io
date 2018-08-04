@@ -77,18 +77,20 @@
 
 
 
-<meta name="description" content="上次看到有人利用博客记录每天的学习笔记，觉得这也不失为一个好方式，又觉得拥有自己的个人博客是一个挺cool的事情。于是看了很多网上教程第一次搭建个人博客，遇到了很多坑，记录下搭建的过程。">
+<meta name="description" content="因缘巧合之下看到有人利用博客记录每天的学习笔记，觉得这也不失为一个学习提升自己的好方式，希望能借此激励自己每天持续学习和思考。于是看了很多网上的教程做准备，进行第一次搭建个人博客，写下本文总结搭建的过程以及遇到的一些问题。  本文主要目的是快速搭建，适合那些只是用来记录一些东西，不想做太多折腾的小白。">
 <meta name="keywords" content="github,hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何在github上创建个人博客">
 <meta property="og:url" content="https://yiyunc.me/2018/08/01/如何在github上创建个人博客/index.html">
 <meta property="og:site_name" content="YiYunC blog">
-<meta property="og:description" content="上次看到有人利用博客记录每天的学习笔记，觉得这也不失为一个好方式，又觉得拥有自己的个人博客是一个挺cool的事情。于是看了很多网上教程第一次搭建个人博客，遇到了很多坑，记录下搭建的过程。">
+<meta property="og:description" content="因缘巧合之下看到有人利用博客记录每天的学习笔记，觉得这也不失为一个学习提升自己的好方式，希望能借此激励自己每天持续学习和思考。于是看了很多网上的教程做准备，进行第一次搭建个人博客，写下本文总结搭建的过程以及遇到的一些问题。  本文主要目的是快速搭建，适合那些只是用来记录一些东西，不想做太多折腾的小白。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-03T11:42:16.463Z">
+<meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/92394050.jpg">
+<meta property="og:updated_time" content="2018-08-04T01:40:53.156Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在github上创建个人博客">
-<meta name="twitter:description" content="上次看到有人利用博客记录每天的学习笔记，觉得这也不失为一个好方式，又觉得拥有自己的个人博客是一个挺cool的事情。于是看了很多网上教程第一次搭建个人博客，遇到了很多坑，记录下搭建的过程。">
+<meta name="twitter:description" content="因缘巧合之下看到有人利用博客记录每天的学习笔记，觉得这也不失为一个学习提升自己的好方式，希望能借此激励自己每天持续学习和思考。于是看了很多网上的教程做准备，进行第一次搭建个人博客，写下本文总结搭建的过程以及遇到的一些问题。  本文主要目的是快速搭建，适合那些只是用来记录一些东西，不想做太多折腾的小白。">
+<meta name="twitter:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/92394050.jpg">
 
 
 
@@ -377,12 +379,25 @@
       
 
       
-        <p>上次看到有人利用博客记录每天的学习笔记，觉得这也不失为一个好方式，又觉得拥有自己的个人博客是一个挺cool的事情。于是看了很多网上教程第一次搭建个人博客，遇到了很多坑，记录下搭建的过程。<br><a id="more"></a></p>
-<blockquote>
-<p>搭建一个人博客主要是<strong>希望能激励自己每天持续学习和思考</strong>。</p>
-</blockquote>
+        <p>  因缘巧合之下看到有人利用博客记录每天的学习笔记，觉得这也不失为一个学习提升自己的好方式，希望能借此激励自己每天持续学习和思考。于是看了很多网上的教程做准备，进行第一次搭建个人博客，写下本文总结搭建的过程以及遇到的一些问题。<br>  本文主要目的是快速搭建，适合那些只是用来记录一些东西，不想做太多折腾的小白。<br><a id="more"></a></p>
 <hr>
-<p>搭建过程虽然提前看了很多教程，却还是遇到了很多坑。</p>
+<hr>
+<hr>
+<p>#一、前言<br>先说下自己搭建博客的大致流程：</p>
+<ol>
+<li>登录GitHub，创建仓库。</li>
+<li>在pc上安装Git，node.js，Hexo环境。</li>
+<li>博客主题的选择和优化（按需配置）。</li>
+<li>绑定自己的域名（可选）。</li>
+</ol>
+<p>#二、准备工作</p>
+<p>##1.创建GitHub仓库<br>  登录GitHub账号（注册请自己查找网上教程），右上角用户头像处选择your repositories点击new创建一个仓库，注意：仓库名的格式，必须是yourusername.github.io；<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/92394050.jpg" alt=""></p>
+<p>##2.安装Git<br>Windows：<a href="https://gitforwindows.org/" target="_blank" rel="noopener">https://gitforwindows.org/</a><br>下载完成后，具体安装过程见<a href="https://blog.csdn.net/sishen47k/article/details/80211002" target="_blank" rel="noopener">https://blog.csdn.net/sishen47k/article/details/80211002</a></p>
+<hr>
+<h2 id="这里推荐一个神器：comder，功能强大，比windows自带的cmd好用很多。（注：comder最好解压在磁盘的根目录下）"><a href="#这里推荐一个神器：comder，功能强大，比windows自带的cmd好用很多。（注：comder最好解压在磁盘的根目录下）" class="headerlink" title="这里推荐一个神器：comder，功能强大，比windows自带的cmd好用很多。（注：comder最好解压在磁盘的根目录下）"></a>这里推荐一个神器：comder，功能强大，比windows自带的cmd好用很多。（注：comder最好解压在磁盘的根目录下）</h2><p>Git安装完成后，打开Git Bash，第一次打开需要设置username和email；<br><code>git config --global user.name &quot;YiYunC&quot;   #与注册的账号邮箱一致；
+ git config --global user.email &quot;chenyiyun940920@gmail.com&quot;</code></p>
+<p>在F盘新建一个名为blog的文件夹作为仓库，在命令行里输入：<br><code>cd /f/blog    #进入F盘的blog文件夹；
+ git init      #初始化当前文件夹作为本地仓库（生成.git文件夹）;</code></p>
 
       
     </div>
@@ -521,8 +536,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -531,7 +555,7 @@
                 alt="YiYunC" />
             
               <p class="site-author-name" itemprop="name">YiYunC</p>
-              <p class="site-description motion-element" itemprop="description">这世界上有一种鸟是没有脚的</p>
+              <p class="site-description motion-element" itemprop="description">这世界上有一种鸟是没有脚的,它只能一直飞呀飞呀，飞累了就睡在风里，这种鸟一辈子只能下地一次，那一次就是它死亡的时候。</p>
           </div>
 
           <nav class="site-state motion-element">
@@ -605,6 +629,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#这里推荐一个神器：comder，功能强大，比windows自带的cmd好用很多。（注：comder最好解压在磁盘的根目录下）"><span class="nav-text">这里推荐一个神器：comder，功能强大，比windows自带的cmd好用很多。（注：comder最好解压在磁盘的根目录下）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

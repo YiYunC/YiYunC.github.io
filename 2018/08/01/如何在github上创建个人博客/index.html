@@ -95,7 +95,7 @@
 <meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/52227617.jpg">
 <meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/61020954.jpg">
 <meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/73143893.jpg">
-<meta property="og:updated_time" content="2018-08-04T13:42:32.675Z">
+<meta property="og:updated_time" content="2018-08-04T13:49:27.709Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在github上创建个人博客">
 <meta name="twitter:description" content="因缘巧合之下看到有人利用博客记录每天的学习笔记，觉得这也不失为一个学习提升自己的好方式，希望能借此激励自己每天持续学习和思考。于是看了很多网上的教程做准备，进行第一次搭建个人博客，写下本文总结搭建的过程以及遇到的一些问题。  本文主要目的是快速搭建，适合那些只是用来记录一些东西，不想做太多折腾的小白。">
@@ -392,15 +392,9 @@
 <hr>
 <hr>
 <hr>
-<h1 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h1><p>先说下自己搭建博客的大致流程：</p>
-<ol>
-<li>登录GitHub，创建仓库。</li>
-<li>在pc上安装Git，node.js，Hexo环境。</li>
-<li>博客配置和主题优化（按需配置）。</li>
-<li>绑定自己的域名（可选）。</li>
-</ol>
+<h1 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h1><p>先说下自己搭建博客的大致流程：<br>1.登录GitHub，创建仓库。<br>2.在pc上安装Git，node.js，Hexo环境。<br>3.博客配置和主题优化（按需配置）。<br>4.绑定自己的域名（可选）。</p>
 <hr>
-<h1 id="二、准备工作"><a href="#二、准备工作" class="headerlink" title="二、准备工作"></a>二、准备工作</h1><h2 id="1-创建GitHub仓库"><a href="#1-创建GitHub仓库" class="headerlink" title="1. 创建GitHub仓库"></a>1. 创建GitHub仓库</h2><p>  登录GitHub账号（注册请自己查找网上教程），右上角用户头像处选择your repositories点击new创建一个仓库，注意：仓库名的格式，必须是yourusername.github.io；<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/92394050.jpg" alt=""></p>
+<h1 id="二、准备工作"><a href="#二、准备工作" class="headerlink" title="二、准备工作"></a>二、准备工作</h1><h2 id="1-创建GitHub仓库"><a href="#1-创建GitHub仓库" class="headerlink" title="1. 创建GitHub仓库"></a>1. 创建GitHub仓库</h2><p>登录GitHub账号（注册请自己查找网上教程），右上角用户头像处选择your repositories点击new创建一个仓库，注意：仓库名的格式，必须是yourusername.github.io；<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/92394050.jpg" alt=""></p>
 <h2 id="2-Git安装与配置"><a href="#2-Git安装与配置" class="headerlink" title="2. Git安装与配置"></a>2. Git安装与配置</h2><h3 id="2-1-Git安装"><a href="#2-1-Git安装" class="headerlink" title="2.1 Git安装"></a>2.1 Git安装</h3><p>Windows：<a href="https://gitforwindows.org/" target="_blank" rel="noopener">git-for-windows</a><br>下载完成后，具体安装过程见<a href="https://blog.csdn.net/sishen47k/article/details/80211002" target="_blank" rel="noopener">Git 中文详细安装教程</a></p>
 <ul>
 <li><strong>这里推荐一个神器：<a href="https://jeffjade.com/2016/01/13/2016-01-13-windows-software-cmder/" target="_blank" rel="noopener">cmder</a>，功能强大，比windows自带的cmd好用很多。（注：cmder最好解压放在磁盘的根目录下）</strong></li>
@@ -426,9 +420,9 @@
 <h1 id="四、绑定域名"><a href="#四、绑定域名" class="headerlink" title="四、绑定域名"></a>四、绑定域名</h1><p>这一步不是必须的，但是绑定域名便于记忆，如果你不愿意每次进入博客都输入github.io这样长长的二级域名，那就去买一个域名绑定下吧，反正也不是特别贵。<br>我用的GitHub免费送的一年<a href="https://www.namecheap.com" target="_blank" rel="noopener">namecheap</a>的.me域名，设置下DNS就可以了。<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/73143893.jpg" alt=""><br>其他的域名绑定设置其他教程里也有。</p>
 <hr>
 <h1 id="五、基本操作"><a href="#五、基本操作" class="headerlink" title="五、基本操作"></a>五、基本操作</h1><p><code>hexo n “新文章” == hexo new “新文章”  #新建文章</code><br>新建文章，生成md文件，可以用<a href="http://markdownpad.com/" target="_blank" rel="noopener">MarkdownPad2</a>进行编辑。</p>
-<p>每次修改完文章或主题什么的，进行以下操作：<br>本地预览：<br><code>hexo clean</code><br><code>hexo generate #简化命令 hexo g</code><br><code>hexo server #简化命令 hexo s</code><br>确认没有需要修改的地方后，上传部署：<br><code>hexo clean</code><br><code>hexo generate #简化命令 hexo g</code><br><code>hexo deploy #简化命令 hexo d</code><br>其实也可以把指令集合成批处理命令;<br><code>hexo clean &amp; hexo g &amp; hexo s</code><br><code>hexo clean &amp; hexo g &amp; hexo d</code><br>注：<strong> 上传部署后，博客并不是马上就能更新的，需要等待一段时间 </strong></p>
+<p>每次修改完文章或主题什么的，进行以下操作：<br>本地预览：<br><code>hexo clean</code><br><code>hexo generate #简化命令 hexo g</code><br><code>hexo server #简化命令 hexo s</code><br>确认没有需要修改的地方后，上传部署：<br><code>hexo clean</code><br><code>hexo generate #简化命令 hexo g</code><br><code>hexo deploy #简化命令 hexo d</code><br>其实也可以把指令集合成批处理命令;<br><code>hexo clean &amp; hexo g &amp; hexo s</code><br><code>hexo clean &amp; hexo g &amp; hexo d</code><br><strong>注：上传部署后，博客并不是马上就能更新的，需要等待一段时间。 </strong></p>
 <p>文章需要加入图片的话，可以用<a href="http://jiantuku.com/#/" target="_blank" rel="noopener">极简图床</a>，免费申请七牛云，注册时有提供教程（身份检核时间挺长的）。</p>
-<h1 id="六、结束语"><a href="#六、结束语" class="headerlink" title="六、结束语"></a>六、结束语</h1><p>有些东西没有时间详细说了，以后慢慢更新，并且很多博客写得比我好多了，下面给出一些参考文章，都是会用到的东西。</p>
+<h1 id="六、结束语"><a href="#六、结束语" class="headerlink" title="六、结束语"></a>六、结束语</h1><p>有些东西没有时间详细说明了，以后有空了慢慢更新，并且很多博客写得比我好多了，下面给出一些参考文章，都是会用到的东西。</p>
 <p><strong>参考文章：</strong></p>
 <ol>
 <li><a href="https://blog.csdn.net/a1274624994/article/details/54749094" target="_blank" rel="noopener">如何在github创建个人博客？</a></li>

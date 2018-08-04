@@ -86,7 +86,7 @@
 <meta property="og:description" content="因缘巧合之下看到有人利用博客记录每天的学习笔记，觉得这也不失为一个学习提升自己的好方式，希望能借此激励自己每天持续学习和思考。于是看了很多网上的教程做准备，进行第一次搭建个人博客，写下本文总结搭建的过程以及遇到的一些问题。  本文主要目的是快速搭建，适合那些只是用来记录一些东西，不想做太多折腾的小白。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/92394050.jpg">
-<meta property="og:updated_time" content="2018-08-04T01:46:27.807Z">
+<meta property="og:updated_time" content="2018-08-04T02:19:29.125Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在github上创建个人博客">
 <meta name="twitter:description" content="因缘巧合之下看到有人利用博客记录每天的学习笔记，觉得这也不失为一个学习提升自己的好方式，希望能借此激励自己每天持续学习和思考。于是看了很多网上的教程做准备，进行第一次搭建个人博客，写下本文总结搭建的过程以及遇到的一些问题。  本文主要目的是快速搭建，适合那些只是用来记录一些东西，不想做太多折腾的小白。">
@@ -392,9 +392,9 @@
 </ol>
 <p>#二、准备工作</p>
 <p>##1.创建GitHub仓库<br>  登录GitHub账号（注册请自己查找网上教程），右上角用户头像处选择your repositories点击new创建一个仓库，注意：仓库名的格式，必须是yourusername.github.io；<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/92394050.jpg" alt=""></p>
-<p>##2.安装Git<br>Windows：<a href="https://gitforwindows.org/" title="git-for-windows" target="_blank" rel="noopener"><a href="https://gitforwindows.org/" target="_blank" rel="noopener">https://gitforwindows.org/</a></a><br>下载完成后，具体安装过程见<a href="https://blog.csdn.net/sishen47k/article/details/80211002" title="Git 中文详细安装教程" target="_blank" rel="noopener"><a href="https://blog.csdn.net/sishen47k/article/details/80211002" target="_blank" rel="noopener">https://blog.csdn.net/sishen47k/article/details/80211002</a></a></p>
-<hr>
-<h2 id="这里推荐一个神器：comder，功能强大，比windows自带的cmd好用很多。（注：comder最好解压在磁盘的根目录下）"><a href="#这里推荐一个神器：comder，功能强大，比windows自带的cmd好用很多。（注：comder最好解压在磁盘的根目录下）" class="headerlink" title="这里推荐一个神器：comder，功能强大，比windows自带的cmd好用很多。（注：comder最好解压在磁盘的根目录下）"></a>这里推荐一个神器：comder，功能强大，比windows自带的cmd好用很多。（注：comder最好解压在磁盘的根目录下）</h2><p>Git安装完成后，打开Git Bash，第一次打开需要设置username和email；<br><code>git config --global user.name &quot;YiYunC&quot;   #与注册的账号邮箱一致；</code><br><code>git config --global user.email &quot;chenyiyun940920@gmail.com&quot;</code></p>
+<p>##2.安装Git<br>Windows：<a href="https://gitforwindows.org/" target="_blank" rel="noopener">git-for-windows</a><br>下载完成后，具体安装过程见<a href="https://blog.csdn.net/sishen47k/article/details/80211002" target="_blank" rel="noopener">Git 中文详细安装教程</a></p>
+<p><strong>这里推荐一个神器：comder，功能强大，比windows自带的cmd好用很多。（注：comder最好解压在磁盘的根目录下）</strong></p>
+<p>Git安装完成后，打开Git Bash，第一次打开需要设置username和email；<br><code>git config --global user.name &quot;YiYunC&quot;   #与注册的账号邮箱一致；</code><br><code>git config --global user.email &quot;chenyiyun940920@gmail.com&quot;</code></p>
 <p>在F盘新建一个名为blog的文件夹作为仓库，在命令行里输入：<br><code>cd /f/blog    #进入F盘的blog文件夹；</code><br><code>git init      #初始化当前文件夹作为本地仓库（生成.git文件夹）;</code></p>
 
       
@@ -534,17 +534,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -627,22 +618,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#这里推荐一个神器：comder，功能强大，比windows自带的cmd好用很多。（注：comder最好解压在磁盘的根目录下）"><span class="nav-text">这里推荐一个神器：comder，功能强大，比windows自带的cmd好用很多。（注：comder最好解压在磁盘的根目录下）</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

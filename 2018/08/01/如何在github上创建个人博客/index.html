@@ -95,7 +95,7 @@
 <meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/52227617.jpg">
 <meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/61020954.jpg">
 <meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/73143893.jpg">
-<meta property="og:updated_time" content="2018-08-04T10:21:42.269Z">
+<meta property="og:updated_time" content="2018-08-04T13:42:32.675Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在github上创建个人博客">
 <meta name="twitter:description" content="因缘巧合之下看到有人利用博客记录每天的学习笔记，觉得这也不失为一个学习提升自己的好方式，希望能借此激励自己每天持续学习和思考。于是看了很多网上的教程做准备，进行第一次搭建个人博客，写下本文总结搭建的过程以及遇到的一些问题。  本文主要目的是快速搭建，适合那些只是用来记录一些东西，不想做太多折腾的小白。">
@@ -419,23 +419,17 @@
 <p>最后这里的一段很重要，改成我图片上的，repo上的地址就是你的GitHub的仓库地址。<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/59423392.jpg" alt=""></p>
 <p>这里说一下，博客根目录下的_config.yml文件叫做<strong>站点配置文件</strong>；而主题目录里的_config.yml文件叫做<strong>主题配置文件</strong>。</p>
 <h2 id="2-主题配置"><a href="#2-主题配置" class="headerlink" title="2. 主题配置"></a>2. 主题配置</h2><p>我用的是Next主题，其风格简约并且功能比较完善，加上时间仓促所以我选择了这个，但是也花了我好多时间来配置完善一些基础功能。还有一些好看的主题如yilia，其实有时间去配置一下，自己的博客看起来会更上一个档次，只能等我以后工作稳定了慢慢去修改了。<br>Next主题下载并解压后，将其放在theme目录里，同时站点配置文件里设置<code>theme: “主题文件夹的名字”</code>,就能切换到相应主题，主题配置文件里可以设置的有很多，就不一一阐述了，讲几个比较偏的。</p>
-<ol>
-<li>主题风格切换（共四种）<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/88249424.jpg" alt=""></li>
-<li>头像以及博客图标的更改<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/46777381.jpg" alt=""><br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/52227617.jpg" alt=""></li>
-<li>打赏的二维码<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/61020954.jpg" alt=""></li>
-</ol>
+<p>1.主题风格切换（共四种）<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/88249424.jpg" alt=""><br>2.头像以及博客图标的更改<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/46777381.jpg" alt=""><br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/52227617.jpg" alt=""><br>3.打赏的二维码<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/61020954.jpg" alt=""></p>
 <p>注：要设置的图片均放在主题目录里的<strong>/source/images</strong>里</p>
-<ul>
-<li>这里给出我自己设置好的Next主题<a href="https://pan.baidu.com/s/1WMp5Sj9n8BiX1HQ04d7aew" target="_blank" rel="noopener">文件</a>，该有的基本都有了，其他的留待你自己去完善。</li>
-</ul>
+<p>最后分享下我自己设置好的Next主题<a href="https://pan.baidu.com/s/1WMp5Sj9n8BiX1HQ04d7aew" target="_blank" rel="noopener">压缩文件</a>，该有的功能基本都有了，其他的留待你自己去完善。</p>
 <hr>
 <h1 id="四、绑定域名"><a href="#四、绑定域名" class="headerlink" title="四、绑定域名"></a>四、绑定域名</h1><p>这一步不是必须的，但是绑定域名便于记忆，如果你不愿意每次进入博客都输入github.io这样长长的二级域名，那就去买一个域名绑定下吧，反正也不是特别贵。<br>我用的GitHub免费送的一年<a href="https://www.namecheap.com" target="_blank" rel="noopener">namecheap</a>的.me域名，设置下DNS就可以了。<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/73143893.jpg" alt=""><br>其他的域名绑定设置其他教程里也有。</p>
 <hr>
 <h1 id="五、基本操作"><a href="#五、基本操作" class="headerlink" title="五、基本操作"></a>五、基本操作</h1><p><code>hexo n “新文章” == hexo new “新文章”  #新建文章</code><br>新建文章，生成md文件，可以用<a href="http://markdownpad.com/" target="_blank" rel="noopener">MarkdownPad2</a>进行编辑。</p>
 <p>每次修改完文章或主题什么的，进行以下操作：<br>本地预览：<br><code>hexo clean</code><br><code>hexo generate #简化命令 hexo g</code><br><code>hexo server #简化命令 hexo s</code><br>确认没有需要修改的地方后，上传部署：<br><code>hexo clean</code><br><code>hexo generate #简化命令 hexo g</code><br><code>hexo deploy #简化命令 hexo d</code><br>其实也可以把指令集合成批处理命令;<br><code>hexo clean &amp; hexo g &amp; hexo s</code><br><code>hexo clean &amp; hexo g &amp; hexo d</code><br>注：<strong> 上传部署后，博客并不是马上就能更新的，需要等待一段时间 </strong></p>
 <p>文章需要加入图片的话，可以用<a href="http://jiantuku.com/#/" target="_blank" rel="noopener">极简图床</a>，免费申请七牛云，注册时有提供教程（身份检核时间挺长的）。</p>
-<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>有些东西没有时间详细说了，以后慢慢更新，并且很多博客写得比我好多了，下面给出一些参考文章，都是会用到的东西。</p>
-<p>参考文章：</p>
+<h1 id="六、结束语"><a href="#六、结束语" class="headerlink" title="六、结束语"></a>六、结束语</h1><p>有些东西没有时间详细说了，以后慢慢更新，并且很多博客写得比我好多了，下面给出一些参考文章，都是会用到的东西。</p>
+<p><strong>参考文章：</strong></p>
 <ol>
 <li><a href="https://blog.csdn.net/a1274624994/article/details/54749094" target="_blank" rel="noopener">如何在github创建个人博客？</a></li>
 <li><a href="https://hceng.cn/2017/03/06/GitHub+Hexo%E6%90%AD%E5%BB%BA%E5%8F%8A%E4%BC%98%E5%8C%96/" target="_blank" rel="noopener">GitHub+Hexo搭建及优化</a></li>
@@ -688,7 +682,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、前言"><span class="nav-text">一、前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、准备工作"><span class="nav-text">二、准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-创建GitHub仓库"><span class="nav-text">1. 创建GitHub仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Git安装与配置"><span class="nav-text">2. Git安装与配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Git安装"><span class="nav-text">2.1 Git安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Git配置"><span class="nav-text">2.2 Git配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-配置SSH-keys"><span class="nav-text">2.3 配置SSH keys</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Node-js安装"><span class="nav-text">3.Node.js安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Hexo安装与配置"><span class="nav-text">4.Hexo安装与配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Hexo安装"><span class="nav-text">4.1 Hexo安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-Hexo配置"><span class="nav-text">4.2 Hexo配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、博客配置和主题优化"><span class="nav-text">三、博客配置和主题优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-博客配置"><span class="nav-text">1. 博客配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-主题配置"><span class="nav-text">2. 主题配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、绑定域名"><span class="nav-text">四、绑定域名</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、基本操作"><span class="nav-text">五、基本操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结束语"><span class="nav-text">结束语</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、前言"><span class="nav-text">一、前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、准备工作"><span class="nav-text">二、准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-创建GitHub仓库"><span class="nav-text">1. 创建GitHub仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Git安装与配置"><span class="nav-text">2. Git安装与配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Git安装"><span class="nav-text">2.1 Git安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Git配置"><span class="nav-text">2.2 Git配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-配置SSH-keys"><span class="nav-text">2.3 配置SSH keys</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Node-js安装"><span class="nav-text">3.Node.js安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Hexo安装与配置"><span class="nav-text">4.Hexo安装与配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Hexo安装"><span class="nav-text">4.1 Hexo安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-Hexo配置"><span class="nav-text">4.2 Hexo配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、博客配置和主题优化"><span class="nav-text">三、博客配置和主题优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-博客配置"><span class="nav-text">1. 博客配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-主题配置"><span class="nav-text">2. 主题配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、绑定域名"><span class="nav-text">四、绑定域名</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、基本操作"><span class="nav-text">五、基本操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六、结束语"><span class="nav-text">六、结束语</span></a></li></ol></div>
             
 
           </div>

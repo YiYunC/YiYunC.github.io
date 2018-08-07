@@ -304,6 +304,286 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yiyunc.me/2018/08/07/几条汇编指令总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YiYunC">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YiYunC blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/07/几条汇编指令总结/" itemprop="url">几条汇编指令总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-07T09:00:12+08:00">
+                2018-08-07
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-08-07T11:36:26+08:00">
+                2018-08-07
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+		  
+		  
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>总结几条比较常用的汇编指令。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/08/07/几条汇编指令总结/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yiyunc.me/2018/08/06/判断CPU的大小端字节序/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YiYunC">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YiYunC blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/06/判断CPU的大小端字节序/" itemprop="url">判断CPU的大小端字节序</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-06T11:11:23+08:00">
+                2018-08-06
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-08-06T15:30:37+08:00">
+                2018-08-06
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+		  
+		  
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<p>小端（Little endian)：低字节存在内存的低地址中，高字节存在内存的高地址中。<br>大端（Big endian）：低字节存在内存的高地址中，高字节存在内存的低地址中。</p>
+<p>主机序和网络字节序</p>
+<blockquote>
+<p>两台主机之间通过TCP/IP协议进行通信的时候，在向对方发送报文前，都需要调用相应的函数把自己的主机序（Little endian）模式转换成网络序（Big endian）模式;同样，在接收到对方的报文信息后，都需要将网络序转换成主机序，即将报文从Big endian转换成Little endian。</p>
+</blockquote>
+<p>Little endian优点：强制转换数据型不需要再调整字节。<br>Big endian优点：有符号数，其字节最高位不仅表示数值本身，还起到了符号的作用。</p>
+<p><code>#include &lt;stdio.h&gt;</code></p>
+<p><code>int main()</code><br><code>{</code><br><code>int a = 0x12345678;</code><br><code>char *p;</code><br><code>p = ( char *)&amp;a;</code><br><code>if (*p == 0x12)</code><br><code>{</code><br><code>printf(&quot;Big endian\n&quot;);</code><br><code>}</code><br><code>else</code><br><code>{</code><br><code>printf(&quot;Little endian\n&quot;);</code><br><code>}</code><br><code>}</code>   </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yiyunc.me/2018/08/01/如何在github上创建个人博客/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -479,7 +759,7 @@
               
                 <a href="//">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -492,7 +772,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>

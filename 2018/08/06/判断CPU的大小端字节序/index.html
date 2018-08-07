@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="大端,小端," />
 
 
 
@@ -77,16 +77,18 @@
 
 
 
-<meta name="description" content="这世界上有一种鸟是没有脚的,它只能一直飞呀飞呀，飞累了就睡在风里，这种鸟一辈子只能下地一次，那一次就是它死亡的时候。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="YiYunC blog">
-<meta property="og:url" content="http://yiyunc.me/tags/github/index.html">
+<meta name="description" content="小端（Little endian)：低字节存在内存的低地址中，高字节存在内存的高地址中。大端（Big endian）：低字节存在内存的高地址中，高字节存在内存的低地址中。 主机序和网络字节序  两台主机之间通过TCP/IP协议进行通信的时候，在向对方发送报文前，都需要调用相应的函数把自己的主机序（Little endian）模式转换成网络序（Big endian）模式;同样，在接收到对方的报文信">
+<meta name="keywords" content="大端,小端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="判断CPU的大小端字节序">
+<meta property="og:url" content="http://yiyunc.me/2018/08/06/判断CPU的大小端字节序/index.html">
 <meta property="og:site_name" content="YiYunC blog">
-<meta property="og:description" content="这世界上有一种鸟是没有脚的,它只能一直飞呀飞呀，飞累了就睡在风里，这种鸟一辈子只能下地一次，那一次就是它死亡的时候。">
+<meta property="og:description" content="小端（Little endian)：低字节存在内存的低地址中，高字节存在内存的高地址中。大端（Big endian）：低字节存在内存的高地址中，高字节存在内存的低地址中。 主机序和网络字节序  两台主机之间通过TCP/IP协议进行通信的时候，在向对方发送报文前，都需要调用相应的函数把自己的主机序（Little endian）模式转换成网络序（Big endian）模式;同样，在接收到对方的报文信">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-06T07:30:37.754Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="YiYunC blog">
-<meta name="twitter:description" content="这世界上有一种鸟是没有脚的,它只能一直飞呀飞呀，飞累了就睡在风里，这种鸟一辈子只能下地一次，那一次就是它死亡的时候。">
+<meta name="twitter:title" content="判断CPU的大小端字节序">
+<meta name="twitter:description" content="小端（Little endian)：低字节存在内存的低地址中，高字节存在内存的高地址中。大端（Big endian）：低字节存在内存的高地址中，高字节存在内存的低地址中。 主机序和网络字节序  两台主机之间通过TCP/IP协议进行通信的时候，在向对方发送报文前，都需要调用相应的函数把自己的主机序（Little endian）模式转换成网络序（Big endian）模式;同样，在接收到对方的报文信">
 
 
 
@@ -116,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yiyunc.me/tags/github/"/>
+  <link rel="canonical" href="http://yiyunc.me/2018/08/06/判断CPU的大小端字节序/"/>
 
 
 
 
 
-  <title>标签: github | YiYunC blog</title>
+  <title>判断CPU的大小端字节序 | YiYunC blog</title>
   
 
 
@@ -151,7 +153,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -289,54 +291,240 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>github<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yiyunc.me/2018/08/06/判断CPU的大小端字节序/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YiYunC">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YiYunC blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/08/01/如何在github上创建个人博客/" itemprop="url">
-              
-                <span itemprop="name">如何在github上创建个人博客</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">判断CPU的大小端字节序</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-01T12:26:22+08:00"
-              content="2018-08-01" >
-          08-01
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-06T11:11:23+08:00">
+                2018-08-06
+              </time>
+            
 
-    </header>
-  </article>
+            
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-08-06T15:30:37+08:00">
+                2018-08-06
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+		  
+			<span class="post-meta-divider">|</span>
+			<span id="busuanzi_value_page_pv"></span>次阅读
+		  
+		  
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <a id="more"></a>
+<p>小端（Little endian)：低字节存在内存的低地址中，高字节存在内存的高地址中。<br>大端（Big endian）：低字节存在内存的高地址中，高字节存在内存的低地址中。</p>
+<p>主机序和网络字节序</p>
+<blockquote>
+<p>两台主机之间通过TCP/IP协议进行通信的时候，在向对方发送报文前，都需要调用相应的函数把自己的主机序（Little endian）模式转换成网络序（Big endian）模式;同样，在接收到对方的报文信息后，都需要将网络序转换成主机序，即将报文从Big endian转换成Little endian。</p>
+</blockquote>
+<p>Little endian优点：强制转换数据型不需要再调整字节。<br>Big endian优点：有符号数，其字节最高位不仅表示数值本身，还起到了符号的作用。</p>
+<p><code>#include &lt;stdio.h&gt;</code></p>
+<p><code>int main()</code><br><code>{</code><br><code>int a = 0x12345678;</code><br><code>char *p;</code><br><code>p = ( char *)&amp;a;</code><br><code>if (*p == 0x12)</code><br><code>{</code><br><code>printf(&quot;Big endian\n&quot;);</code><br><code>}</code><br><code>else</code><br><code>{</code><br><code>printf(&quot;Little endian\n&quot;);</code><br><code>}</code><br><code>}</code>   </p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="YiYunC 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="YiYunC 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    YiYunC
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yiyunc.me/2018/08/06/判断CPU的大小端字节序/" title="判断CPU的大小端字节序">http://yiyunc.me/2018/08/06/判断CPU的大小端字节序/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/大端/" rel="tag"><i class="fa fa-tag"></i> 大端</a>
+          
+            <a href="/tags/小端/" rel="tag"><i class="fa fa-tag"></i> 小端</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/01/如何在github上创建个人博客/" rel="next" title="如何在github上创建个人博客">
+                <i class="fa fa-chevron-left"></i> 如何在github上创建个人博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/07/几条汇编指令总结/" rel="prev" title="几条汇编指令总结">
+                几条汇编指令总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -344,6 +532,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -589,6 +781,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

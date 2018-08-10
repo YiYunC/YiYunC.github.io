@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[ARM芯片时钟体系]]></title>
+    <url>%2F2018%2F08%2F10%2FARM%E8%8A%AF%E7%89%87%E6%97%B6%E9%92%9F%E4%BD%93%E7%B3%BB%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
     <title><![CDATA[几条汇编指令总结]]></title>
     <url>%2F2018%2F08%2F07%2F%E5%87%A0%E6%9D%A1%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4%E6%80%BB%E7%BB%93%2F</url>
     <content type="text"><![CDATA[总结几条比较常用的汇编指令。 1.LDRload，读内存。LDR R0,[R1]假设R1的值是x，读取地址x上的数据（4字节），保存到R0中。 2.STRstore，写内存。STR R0,[R1]假设R1的值是x，把R0的值写到地址x（4字节）上。 3.Bback，跳转 4.MOVmove，赋值。MOV R0,R1把R1的值赋给R0，即R0=R1。MOV R0，#0x100R0=0x100。 5.伪指令LDR R0，=0x12345678表示R0=0x12345678，会被拆分成几条真正的RAM指令。为什么会有伪指令的存在，例如MOV RO，#0x12345678这条指令是错误的，因为32位的ARM指令中总有一位表示MOV，还有一位表示R0，剩下的位数不足32位，不能表示任意数，只能表示简单值（叫做立即数）。 6.add、subadd r0,r1,#4 :r0=r1+4 sub r0,r1,#4 :r0=r1-4sub r0,r1,r2 :r0=r1-r2 7.BLbranch and linkbl xxx: 1跳到xxx；2把返回地址（下一条指令的地址）保存在lr寄存器中。 8.ldm、stmldm:读内存，写入多个寄存器。stm:把多个寄存器的值写入内存。ldmia（increment after）：过后增加stmdb（decrement before）：预先减少 stmdb sp!,{fp,ip,lr,pc}这条指令中，首先假设sp=4096，那么由stmdb可知1.先减sp’=sp-4=4092;2.后存4092~4095存放pc的值；3.先减sp’=sp-4=4088;4.后存4088~4091存放lr的值；…..依次循环。其中sp!表示sp=最终的被修改的sp值4080。注：高编号寄存器存在高地址，fp、ip、sp、ls、pc的编号分别是r11、r12、r13、r14、r15。 ldmia sp,{fp,sp,pc}这条指令中，由ldmia可知1.先读fp=4080~4083的值即原来保存的fp；2.后增sp’=sp+4=4084;3.先读sp=4084~4087的值即原来保存的ip;4.后增sp’=sp+4=4088；…..依次循环。其中sp无!则表示修改后的地址值不存入sp。]]></content>

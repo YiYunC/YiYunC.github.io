@@ -627,8 +627,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-08-06T15:30:37+08:00">
-                2018-08-06
+              <time title="更新于" itemprop="dateModified" datetime="2018-08-13T09:52:03+08:00">
+                2018-08-13
               </time>
             
           </span>
@@ -664,18 +664,14 @@
 
       
         
-          
-            <a id="more"></a>
-<p>小端（Little endian)：低字节存在内存的低地址中，高字节存在内存的高地址中。<br>大端（Big endian）：低字节存在内存的高地址中，高字节存在内存的低地址中。</p>
-<p>主机序和网络字节序</p>
-<blockquote>
-<p>两台主机之间通过TCP/IP协议进行通信的时候，在向对方发送报文前，都需要调用相应的函数把自己的主机序（Little endian）模式转换成网络序（Big endian）模式;同样，在接收到对方的报文信息后，都需要将网络序转换成主机序，即将报文从Big endian转换成Little endian。</p>
-</blockquote>
-<p>Little endian优点：强制转换数据型不需要再调整字节。<br>Big endian优点：有符号数，其字节最高位不仅表示数值本身，还起到了符号的作用。</p>
-<p><code>#include &lt;stdio.h&gt;</code></p>
-<p><code>int main()</code><br><code>{</code><br><code>int a = 0x12345678;</code><br><code>char *p;</code><br><code>p = ( char *)&amp;a;</code><br><code>if (*p == 0x12)</code><br><code>{</code><br><code>printf(&quot;Big endian\n&quot;);</code><br><code>}</code><br><code>else</code><br><code>{</code><br><code>printf(&quot;Little endian\n&quot;);</code><br><code>}</code><br><code>}</code>   </p>
-
-          
+          <p>小端（Little endian)：低字节存在内存的低地址中，高字节存在内存的高地址中。<br>大端（Big endian）：低字节存在内存的高地址中，高字节存在内存的低地址中。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/08/06/判断CPU的大小端字节序/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

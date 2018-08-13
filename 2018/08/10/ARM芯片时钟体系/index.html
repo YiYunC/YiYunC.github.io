@@ -92,10 +92,9 @@
 <meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/22689008.jpg">
 <meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/96230094.jpg">
 <meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/73806757.jpg">
-<meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-13/16944940.jpg">
 <meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/20349431.jpg">
 <meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-13/53274620.jpg">
-<meta property="og:updated_time" content="2018-08-13T08:38:36.073Z">
+<meta property="og:updated_time" content="2018-08-13T08:53:55.424Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ARM芯片时钟体系">
 <meta name="twitter:description" content="以前用STM32板子的时候，没有仔细看过ARM芯片的时钟体系，“拿来主义”贯彻到底，这次写篇文章来总结顺便复习下ARM芯片时钟体系的构成。">
@@ -361,7 +360,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-08-13T16:38:36+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-08-13T16:53:55+08:00">
                 2018-08-13
               </time>
             
@@ -404,12 +403,11 @@
 <a id="more"></a>
 <h1 id="一、JZ2440"><a href="#一、JZ2440" class="headerlink" title="一、JZ2440"></a>一、JZ2440</h1><p>最近在学习嵌入式Linux开发，用的S3C2440芯片的板子，板子外接的晶振频率为12MHz，需要通过时钟控制逻辑的PLL（锁相环）提高系统时钟。</p>
 <p>时钟控制逻辑提供了3种时钟：<br>1.FCLK用于CPU核。</p>
-<hr>
-<p>2.HCLK用于AHB总线上的设备（频率相对较高），H可以理解为high，如CPU核、Memory CONT.、Interrupt CONT.、LCD控制器、DMA等。</p>
-<h2 id=""><a href="#" class="headerlink" title=""></a><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/3215543.jpg" alt=""></h2><p>3.PCLK用于APB总线上的设备（频率相对较低），P可以理解为peripheral，如Watchdog、I2C、SPI、UART、SPI、GPIO等外设。</p>
-<h2 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/52372645.jpg" alt=""></h2><p>板子设有两个PLL：MPLL和UPLL。UPLL专用于USB设备，MPLL用来设置FCLK、HCLK、PCLK。</p>
+<p>2.HCLK用于AHB总线上的设备（频率相对较高），H可以理解为high，如CPU核、Memory CONT.、Interrupt CONT.、LCD控制器、DMA等。<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/3215543.jpg" alt=""></p>
+<p>3.PCLK用于APB总线上的设备（频率相对较低），P可以理解为peripheral，如Watchdog、I2C、SPI、UART、SPI、GPIO等外设。</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/52372645.jpg" alt=""></h2><p>板子设有两个PLL：MPLL和UPLL。UPLL专用于USB设备，MPLL用来设置FCLK、HCLK、PCLK。</p>
 <p>在芯片手册里可以查到FCLK、HCLK、PCLK最高分别为400、136、68MHz。那么如何通过编程把12M的时钟源提高成这些新的时钟是我们接下来分析的问题。</p>
-<h2 id="上电复位序列图"><a href="#上电复位序列图" class="headerlink" title="上电复位序列图"></a>上电复位序列图</h2><p>在芯片手册可以找到一个<strong>上电复位序列图</strong>。<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/82972905.jpg" alt=""><br>仔细推敲这个图，会发现有几个特别的地方：1.刚上电，复位引脚nRESET不是马上拉到高电平；2.OM[3:2]的作用；3.Lock Time里的工作机制。</p>
+<h2 id="1-上电复位序列图"><a href="#1-上电复位序列图" class="headerlink" title="1.上电复位序列图"></a>1.上电复位序列图</h2><p>在芯片手册可以找到一个<strong>上电复位序列图</strong>。<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/82972905.jpg" alt=""><br>仔细推敲这个图，会发现有几个特别的地方：1.刚上电，复位引脚nRESET不是马上拉到高电平；2.OM[3:2]的作用；3.Lock Time里的工作机制。</p>
 <p>查看下原理图，会发现nRESET上连接的芯片是IMP811T，网上查找芯片资料<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/22689008.jpg" alt=""></p>
 <p>所以等到板子电源稳定后复位引脚才会输出高电平。</p>
 <p><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/96230094.jpg" alt=""><br>OSC是<strong>晶体振荡器</strong>，EXTCLK是另一个引脚。而<strong>OM[3:2]</strong>其实就是一个选择器，在下图中可以看出它控制引脚OM3、OM2模式的状态。<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/73806757.jpg" alt=""><br>原理图里可以看到OM2和OM3引脚均<strong>接地</strong>，所以应该是00的模式，即选择晶振作为时钟源。</p>
@@ -417,11 +415,19 @@
 <ul>
 <li><strong>小结：OM模式，Lock Time这两个是基础的设定。</strong></li>
 </ul>
-<h2 id="PLL寄存器的设定"><a href="#PLL寄存器的设定" class="headerlink" title="PLL寄存器的设定"></a>PLL寄存器的设定</h2><p>接下来重要的是PLL的设定，主要由CLKDIVN、CAMDIVN、MPLLCON这几个寄存器来设定（UPLLCON暂时不讲）。</p>
+<h2 id="2-PLL寄存器的设定"><a href="#2-PLL寄存器的设定" class="headerlink" title="2.PLL寄存器的设定"></a>2.PLL寄存器的设定</h2><p>接下来重要的是PLL的设定，主要由CLKDIVN、CAMDIVN、MPLLCON这几个寄存器来设定（UPLLCON暂时不讲）。</p>
 <p>CLKDIVN寄存器是用来设定FCLK、HCLK、PCLK这三者一些简单的比例关系，一些比较特殊的比例关系就要用到CAMDIVN寄存器。</p>
-<p>MPLLCON寄存器是设定FCLK与<strong>晶振频率（Fin）</strong>的倍数，芯片手册有相应的公式：<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-13/16944940.jpg" alt=""><br>通过公式简单计算可以得到MDIV、PDIV、SDIV的值，再通过移位操作设定寄存器的值。<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/20349431.jpg" alt=""></p>
-<h2 id="CPU-bus-mode"><a href="#CPU-bus-mode" class="headerlink" title="CPU bus mode"></a>CPU bus mode</h2><p>芯片手册第七章看完，会看到一个NOTE:<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-13/53274620.jpg" alt=""></p>
-<p>这里说到当HDIVN不为0，必须执行以下指令将CPU bus mode更改成asynchronous bus mode（异步总线模式）：<br>    MMU_SetAsyncBusMode<br>    mrc p15,0,r0,c1,c0,0<br>    orr r0,r0,#R1_nF:OR:R1_iA   //R1_nF:OR:R1_iA==0xc0000000<br>    mcr p15,0,r0,c1,c0,0<br>而当HDIVN不为0且CPU bus mode是fast bus mode（快速总线模式）时，CPU工作频率将变为HCLK，不再是FCLK。</p>
+<p>MPLLCON寄存器是设定FCLK与<strong>晶振频率（Fin）</strong>的倍数，芯片手册有相应的公式：</p>
+<pre><code>Mpll = (2 * m * Fin) / (p * 2^S)
+* m = (MDIV + 8), p = (PDIV + 2), s = SDIV
+</code></pre><p>通过公式简单计算可以得到MDIV、PDIV、SDIV的值，再通过移位操作设定寄存器的值。<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/20349431.jpg" alt=""></p>
+<h2 id="3-CPU-bus-mode"><a href="#3-CPU-bus-mode" class="headerlink" title="3.CPU bus mode"></a>3.CPU bus mode</h2><p>芯片手册第七章看完，会看到一个NOTE:<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-13/53274620.jpg" alt=""></p>
+<p>这里说到当HDIVN不为0，必须执行以下指令将CPU bus mode更改成asynchronous bus mode（异步总线模式）：</p>
+<pre><code>MMU_SetAsyncBusMode
+mrc p15,0,r0,c1,c0,0
+orr r0,r0,#R1_nF:OR:R1_iA   //R1_nF:OR:R1_iA==0xc0000000
+mcr p15,0,r0,c1,c0,0
+</code></pre><p>而当HDIVN不为0且CPU bus mode是fast bus mode（快速总线模式）时，CPU工作频率将变为HCLK，不再是FCLK。</p>
 <p>下面以设置FCLK=400MHz，HCLK=400MHz，PCLK=400MHz为例子写出部分代码。</p>
 <hr>
 <pre><code>/* 设定Lock Time的值-&gt;初始值 */
@@ -719,7 +725,7 @@ str r1, [r0]
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、JZ2440"><span class="nav-text">一、JZ2440</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-1"><span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上电复位序列图"><span class="nav-text">上电复位序列图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PLL寄存器的设定"><span class="nav-text">PLL寄存器的设定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU-bus-mode"><span class="nav-text">CPU bus mode</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、STM32F103"><span class="nav-text">二、STM32F103</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、JZ2440"><span class="nav-text">一、JZ2440</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-上电复位序列图"><span class="nav-text">1.上电复位序列图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-PLL寄存器的设定"><span class="nav-text">2.PLL寄存器的设定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-CPU-bus-mode"><span class="nav-text">3.CPU bus mode</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、STM32F103"><span class="nav-text">二、STM32F103</span></a></li></ol></div>
             
 
           </div>

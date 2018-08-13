@@ -85,10 +85,12 @@
 <meta property="og:site_name" content="YiYunC blog">
 <meta property="og:description" content="小端（Little endian)：低字节存在内存的低地址中，高字节存在内存的高地址中。大端（Big endian）：低字节存在内存的高地址中，高字节存在内存的低地址中。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-13T01:52:03.262Z">
+<meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-13/71015735.jpg">
+<meta property="og:updated_time" content="2018-08-13T08:41:36.246Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="判断CPU的大小端字节序">
 <meta name="twitter:description" content="小端（Little endian)：低字节存在内存的低地址中，高字节存在内存的高地址中。大端（Big endian）：低字节存在内存的高地址中，高字节存在内存的低地址中。">
+<meta name="twitter:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-13/71015735.jpg">
 
 
 
@@ -350,7 +352,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-08-13T09:52:03+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-08-13T16:41:36+08:00">
                 2018-08-13
               </time>
             
@@ -389,16 +391,28 @@
       
 
       
-        <p>小端（Little endian)：低字节存在内存的低地址中，高字节存在内存的高地址中。<br>大端（Big endian）：低字节存在内存的高地址中，高字节存在内存的低地址中。</p>
-<a id="more"></a>
-<p>主机序和网络字节序</p>
-<blockquote>
-<p>两台主机之间通过TCP/IP协议进行通信的时候，在向对方发送报文前，都需要调用相应的函数把自己的主机序（Little endian）模式转换成网络序（Big endian）模式;同样，在接收到对方的报文信息后，都需要将网络序转换成主机序，即将报文从Big endian转换成Little endian。</p>
+        <p><strong>小端（Little endian)</strong>：低字节存在内存的低地址中，高字节存在内存的高地址中。<br><strong>大端（Big endian）</strong>：低字节存在内存的高地址中，高字节存在内存的低地址中。<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-13/71015735.jpg" alt=""><br><a id="more"></a></p>
+<h1 id="主机序和网络字节序"><a href="#主机序和网络字节序" class="headerlink" title="主机序和网络字节序"></a>主机序和网络字节序</h1><blockquote>
+<p><strong>两台主机之间通过TCP/IP协议进行通信的时候，在向对方发送报文前，都需要调用相应的函数把自己的主机序（Little endian）模式转换成网络序（Big endian）模式;同样，在接收到对方的报文信息后，都需要将网络序转换成主机序，即将报文从Big endian转换成Little endian</strong>。</p>
 </blockquote>
 <p>Little endian优点：强制转换数据型不需要再调整字节。<br>Big endian优点：有符号数，其字节最高位不仅表示数值本身，还起到了符号的作用。</p>
-<p><code>#include &lt;stdio.h&gt;</code></p>
-<p><code>int main()</code><br><code>{</code><br><code>int a = 0x12345678;</code><br><code>char *p;</code><br><code>p = ( char *)&amp;a;</code><br><code>if (*p == 0x12)</code><br><code>{</code><br><code>printf(&quot;Big endian\n&quot;);</code><br><code>}</code><br><code>else</code><br><code>{</code><br><code>printf(&quot;Little endian\n&quot;);</code><br><code>}</code><br><code>}</code>   </p>
+<pre><code>#include &lt;stdio.h&gt;
 
+int main()
+{
+    int a = 0x12345678;
+    char *p;
+    p = ( char *)&amp;a;
+    if (*p == 0x12)
+    {
+        printf(&quot;Big endian\n&quot;);
+    }
+    else
+    {
+        printf(&quot;Little endian\n&quot;);
+    }
+}   
+</code></pre>
       
     </div>
     
@@ -556,8 +570,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -589,7 +612,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
@@ -640,6 +663,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主机序和网络字节序"><span class="nav-text">主机序和网络字节序</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="JZ2440,STM32F103," />
 
 
 
@@ -77,17 +77,27 @@
 
 
 
-<meta name="description" content="这世界上有一种鸟是没有脚的,它只能一直飞呀飞呀，飞累了就睡在风里，这种鸟一辈子只能下地一次，那一次就是它死亡的时候。">
+<meta name="description" content="以前用STM32板子的时候，没有看过ARM芯片的时钟体系，“拿来主义”贯彻到底，这次写篇文章来总结顺便复习下时钟体系的构成。">
+<meta name="keywords" content="JZ2440,STM32F103">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ARM芯片时钟体系">
 <meta property="og:url" content="http://yiyunc.me/2018/08/10/ARM芯片时钟体系/index.html">
 <meta property="og:site_name" content="YiYunC blog">
-<meta property="og:description" content="这世界上有一种鸟是没有脚的,它只能一直飞呀飞呀，飞累了就睡在风里，这种鸟一辈子只能下地一次，那一次就是它死亡的时候。">
+<meta property="og:description" content="以前用STM32板子的时候，没有看过ARM芯片的时钟体系，“拿来主义”贯彻到底，这次写篇文章来总结顺便复习下时钟体系的构成。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-10T13:20:41.392Z">
+<meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/3215543.jpg">
+<meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/52372645.jpg">
+<meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/82972905.jpg">
+<meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/22689008.jpg">
+<meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/96230094.jpg">
+<meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/73806757.jpg">
+<meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-13/16944940.jpg">
+<meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/20349431.jpg">
+<meta property="og:updated_time" content="2018-08-13T01:47:57.031Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ARM芯片时钟体系">
-<meta name="twitter:description" content="这世界上有一种鸟是没有脚的,它只能一直飞呀飞呀，飞累了就睡在风里，这种鸟一辈子只能下地一次，那一次就是它死亡的时候。">
+<meta name="twitter:description" content="以前用STM32板子的时候，没有看过ARM芯片的时钟体系，“拿来主义”贯彻到底，这次写篇文章来总结顺便复习下时钟体系的构成。">
+<meta name="twitter:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/3215543.jpg">
 
 
 
@@ -349,8 +359,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-08-10T21:20:41+08:00">
-                2018-08-10
+              <time title="更新于" itemprop="dateModified" datetime="2018-08-13T09:47:57+08:00">
+                2018-08-13
               </time>
             
           </span>
@@ -388,7 +398,32 @@
       
 
       
-        
+        <p>以前用STM32板子的时候，没有看过ARM芯片的时钟体系，“拿来主义”贯彻到底，这次写篇文章来总结顺便复习下时钟体系的构成。</p>
+<a id="more"></a>
+<p>最近在学习嵌入式Linux开发，用的S3C2440芯片的板子，板子外接的晶振频率为12MHz，需要通过时钟控制逻辑的PLL提高系统时钟。时钟控制逻辑提供了3种时钟：</p>
+<ol>
+<li>FCLK用于CPU核。</li>
+<li>HCLK用于AHB总线上的设备（频率相对较高），H可以理解为high，如CPU核、Memory CONT.、Interrupt CONT.、LCD控制器、DMA等。<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/3215543.jpg" alt=""></li>
+<li>PCLK用于APB总线上的设备（频率相对较低），P可以理解为peripheral，如Watchdog、I2C、SPI、UART、SPI、GPIO等外设。<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/52372645.jpg" alt=""><br>板子设有两个PLL：MPLL和UPLL。UPLL专用于USB设备，MPLL用来设置FCLK、HCLK、PCLK。<br>在芯片手册里可以查到FCLK、HCLK、PCLK最高分别为400、136、68MHz。那么如何通过编程把12M的时钟源提高成这些新的时钟是我们接下来分析的问题。</li>
+</ol>
+<p>在芯片手册可以找到这个上电复位序列图。<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/82972905.jpg" alt=""><br>仔细推敲这个图，会发现有几个特别的地方：1.刚上电，复位引脚nRESET不是马上拉到高电平；2.OM[3:2]的作用；3.Lock Time里的工作机制。</p>
+<p>查看下原理图，会发现nRESET上连接的芯片是IMP811T，网上查找芯片资料<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/22689008.jpg" alt=""><br>所以等到板子电源稳定后复位引脚才会输出高电平。</p>
+<p><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/96230094.jpg" alt=""><br>OSC是晶体振荡器，EXTCLK是另一个引脚。而OM[3:2]其实就是一个选择器，在下图中可以看出它控制引脚OM3、OM2模式的状态。<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/73806757.jpg" alt=""><br>原理图里可以看到OM2和OM3引脚均接地，所以是00的模式，即选择晶振作为时钟源。</p>
+<p>引脚OM[3:2]的电平在被内部电路捕获后，PLL就准备开始工作了，Lock Time就是PLL的锁存时间（有初始值，可以由相应寄存器设定），这段时间内，FCLK停振，CPU停止工作，MPLL开始工作；过了Lock Time这段时间后，FCLK=MPLL输出的新时钟，此时CPU重新运行。</p>
+<p>到这里可以先小结一下，OM模式的选择，Lock Time的设定这几个是基础的设定。</p>
+<p>接下来重要的是PLL的设定，主要由CLKDIVN、CAMDIVN、MPLLCON这几个寄存器来设定（UPLLCON暂时不讲）。</p>
+<p>CLKDIVN寄存器是用来设定FCLK、HCLK、PCLK这三者一些简单的比例关系，一些比较特殊的比例关系就要用到CAMDIVN寄存器。</p>
+<p>MPLLCON寄存器是设定FCLK与晶振频率（Fin）的倍数，芯片手册有相应的公式：<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-13/16944940.jpg" alt=""><br>通过公式简单计算可以得到MDIV、PDIV、SDIV的值，再通过移位操作设定寄存器的值。<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/20349431.jpg" alt=""></p>
+<p>`/<em> LOCKTIME(0x4C000000)=0xFFFFFFFF </em>/<br>ldr r0, =0x4C000000<br>ldr r1, =0xFFFFFFFF<br>str r1,[r0]</p>
+<p>/<em> CLKDIVN(0x4C000014) = 0b0101, tFCLK:tHCLK:tPCLK = 1:4:8 </em>/<br>ldr r0, =0x4C000014<br>ldr r1, =0x5<br>str r1,[r0]</p>
+<p>/<em> 设置CPU工作于异步模式 </em>/<br>mrc p15,0,r0,c1,c0,0<br>orr r0,r0,#0xc0000000   //R1_nF:OR:R1_iA<br>mcr p15,0,r0,c1,c0,0</p>
+<p>/<em> 设置MPLLCON(0x4C000004) = (92&lt;&lt;12)|(1&lt;&lt;4)|(1&lt;&lt;0) </em>/<br>ldr r0, =0x4C000004<br>ldr r1, =(92&lt;&lt;12)|(1&lt;&lt;4)|(1&lt;&lt;0)<br>str r1,[r0]</p>
+<p>/* 一旦设置PLL,就会锁定LOCK TIME直到PLL输出稳定 </p>
+<ul>
+<li>然后CPU工作于新的频率FCLK<br>*/`</li>
+</ul>
+<p>持续更新中……….</p>
+
       
     </div>
     
@@ -449,6 +484,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JZ2440/" rel="tag"><i class="fa fa-tag"></i> JZ2440</a>
+          
+            <a href="/tags/STM32F103/" rel="tag"><i class="fa fa-tag"></i> STM32F103</a>
+          
+        </div>
       
 
       
@@ -567,7 +610,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>

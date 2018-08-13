@@ -3,7 +3,11 @@
   <entry>
     <title><![CDATA[ARM芯片时钟体系]]></title>
     <url>%2F2018%2F08%2F10%2FARM%E8%8A%AF%E7%89%87%E6%97%B6%E9%92%9F%E4%BD%93%E7%B3%BB%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[以前用STM32板子的时候，没有看过ARM芯片的时钟体系，“拿来主义”贯彻到底，这次写篇文章来总结顺便复习下时钟体系的构成。 最近在学习嵌入式Linux开发，用的S3C2440芯片的板子，板子外接的晶振频率为12MHz，需要通过时钟控制逻辑的PLL提高系统时钟。时钟控制逻辑提供了3种时钟： FCLK用于CPU核。 HCLK用于AHB总线上的设备（频率相对较高），H可以理解为high，如CPU核、Memory CONT.、Interrupt CONT.、LCD控制器、DMA等。 PCLK用于APB总线上的设备（频率相对较低），P可以理解为peripheral，如Watchdog、I2C、SPI、UART、SPI、GPIO等外设。板子设有两个PLL：MPLL和UPLL。UPLL专用于USB设备，MPLL用来设置FCLK、HCLK、PCLK。在芯片手册里可以查到FCLK、HCLK、PCLK最高分别为400、136、68MHz。那么如何通过编程把12M的时钟源提高成这些新的时钟是我们接下来分析的问题。 在芯片手册可以找到这个上电复位序列图。仔细推敲这个图，会发现有几个特别的地方：1.刚上电，复位引脚nRESET不是马上拉到高电平；2.OM[3:2]的作用；3.Lock Time里的工作机制。 查看下原理图，会发现nRESET上连接的芯片是IMP811T，网上查找芯片资料所以等到板子电源稳定后复位引脚才会输出高电平。 OSC是晶体振荡器，EXTCLK是另一个引脚。而OM[3:2]其实就是一个选择器，在下图中可以看出它控制引脚OM3、OM2模式的状态。原理图里可以看到OM2和OM3引脚均接地，所以是00的模式，即选择晶振作为时钟源。 引脚OM[3:2]的电平在被内部电路捕获后，PLL就准备开始工作了，Lock Time就是PLL的锁存时间（有初始值，可以由相应寄存器设定），这段时间内，FCLK停振，CPU停止工作，MPLL开始工作；过了Lock Time这段时间后，FCLK=MPLL输出的新时钟，此时CPU重新运行。 到这里可以先小结一下，OM模式的选择，Lock Time的设定这几个是基础的设定。 接下来重要的是PLL的设定，主要由CLKDIVN、CAMDIVN、MPLLCON这几个寄存器来设定（UPLLCON暂时不讲）。 CLKDIVN寄存器是用来设定FCLK、HCLK、PCLK这三者一些简单的比例关系，一些比较特殊的比例关系就要用到CAMDIVN寄存器。 MPLLCON寄存器是设定FCLK与晶振频率（Fin）的倍数，芯片手册有相应的公式：通过公式简单计算可以得到MDIV、PDIV、SDIV的值，再通过移位操作设定寄存器的值。 `/ LOCKTIME(0x4C000000)=0xFFFFFFFF /ldr r0, =0x4C000000ldr r1, =0xFFFFFFFFstr r1,[r0] / CLKDIVN(0x4C000014) = 0b0101, tFCLK:tHCLK:tPCLK = 1:4:8 /ldr r0, =0x4C000014ldr r1, =0x5str r1,[r0] / 设置CPU工作于异步模式 /mrc p15,0,r0,c1,c0,0orr r0,r0,#0xc0000000 //R1_nF:OR:R1_iAmcr p15,0,r0,c1,c0,0 / 设置MPLLCON(0x4C000004) = (92&lt;&lt;12)|(1&lt;&lt;4)|(1&lt;&lt;0) /ldr r0, =0x4C000004ldr r1, =(92&lt;&lt;12)|(1&lt;&lt;4)|(1&lt;&lt;0)str r1,[r0] /* 一旦设置PLL,就会锁定LOCK TIME直到PLL输出稳定 然后CPU工作于新的频率FCLK*/` 持续更新中……….]]></content>
+      <tags>
+        <tag>JZ2440</tag>
+        <tag>STM32F103</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[几条汇编指令总结]]></title>

@@ -5,12 +5,16 @@
     
   <url>
     <loc>http://yiyunc.me/2018/08/10/ARM%E8%8A%AF%E7%89%87%E6%97%B6%E9%92%9F%E4%BD%93%E7%B3%BB/</loc>
-    <lastmod>2018-08-10T13:20:41.392Z</lastmod>
+    <lastmod>2018-08-13T01:47:57.031Z</lastmod>
     <data>
         <display>
         <title>ARM芯片时钟体系</title>
         <pubTime>2018-08-10T13:20:41.000Z</pubTime>
         
+        <tag>JZ2440</tag>
+         
+        <tag>STM32F103</tag>
+         
          
            
         </display>

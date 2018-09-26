@@ -77,16 +77,17 @@
 
 
 
-<meta name="description" content="我想养一只猫一只狗再养一个你">
-<meta property="og:type" content="website">
-<meta property="og:title" content="YiYunC blog">
-<meta property="og:url" content="http://yiyunc.me/tags/hexo/index.html">
+<meta name="description" content="串口通信是嵌入式里很基础的一个东西。常说的串口一般指的是UART，有4-pin杜邦头(VCC,GND,RX,TX),使用的是TTL电平。而COM口就是电脑上常用的那种9-pin插头，使用的是RS-232电平。 TTL电平： RS-232电平： 两者的对比可以去看看这篇老文章“RS-232 vs. TTL Serial Communication”。需要补充基础知识的就点开这个文章“什么是TTL电平">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UART基础知识和裸机编程">
+<meta property="og:url" content="http://yiyunc.me/2018/08/16/UART通信协议/index.html">
 <meta property="og:site_name" content="YiYunC blog">
-<meta property="og:description" content="我想养一只猫一只狗再养一个你">
+<meta property="og:description" content="串口通信是嵌入式里很基础的一个东西。常说的串口一般指的是UART，有4-pin杜邦头(VCC,GND,RX,TX),使用的是TTL电平。而COM口就是电脑上常用的那种9-pin插头，使用的是RS-232电平。 TTL电平： RS-232电平： 两者的对比可以去看看这篇老文章“RS-232 vs. TTL Serial Communication”。需要补充基础知识的就点开这个文章“什么是TTL电平">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-26T09:21:37.506Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="YiYunC blog">
-<meta name="twitter:description" content="我想养一只猫一只狗再养一个你">
+<meta name="twitter:title" content="UART基础知识和裸机编程">
+<meta name="twitter:description" content="串口通信是嵌入式里很基础的一个东西。常说的串口一般指的是UART，有4-pin杜邦头(VCC,GND,RX,TX),使用的是TTL电平。而COM口就是电脑上常用的那种9-pin插头，使用的是RS-232电平。 TTL电平： RS-232电平： 两者的对比可以去看看这篇老文章“RS-232 vs. TTL Serial Communication”。需要补充基础知识的就点开这个文章“什么是TTL电平">
 
 
 
@@ -116,13 +117,13 @@
 
 
 
-  <link rel="canonical" href="http://yiyunc.me/tags/hexo/"/>
+  <link rel="canonical" href="http://yiyunc.me/2018/08/16/UART通信协议/"/>
 
 
 
 
 
-  <title>标签: hexo | YiYunC blog</title>
+  <title>UART基础知识和裸机编程 | YiYunC blog</title>
   
 
 
@@ -151,7 +152,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -289,54 +290,195 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>hexo<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yiyunc.me/2018/08/16/UART通信协议/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YiYunC">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YiYunC blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/08/01/如何在github上创建个人博客/" itemprop="url">
-              
-                <span itemprop="name">如何在github上创建个人博客</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">UART基础知识和裸机编程</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-01T12:26:22+08:00"
-              content="2018-08-01" >
-          08-01
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-16T07:34:23+08:00">
+                2018-08-16
+              </time>
+            
 
-    </header>
-  </article>
+            
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-09-26T17:21:37+08:00">
+                2018-09-26
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+		  
+			<span class="post-meta-divider">|</span>
+			<span id="busuanzi_value_page_pv"></span>次阅读
+		  
+		  
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>串口通信是嵌入式里很基础的一个东西。<br>常说的串口一般指的是UART，有4-pin杜邦头(VCC,GND,RX,TX),使用的是TTL电平。<br>而COM口就是电脑上常用的那种9-pin插头，使用的是RS-232电平。</p>
+<p>TTL电平：</p>
+<p>RS-232电平：</p>
+<p>两者的对比可以去看看这篇老文章<a href="https://www.sparkfun.com/tutorials/215" target="_blank" rel="noopener">“RS-232 vs. TTL Serial Communication”</a>。<br>需要补充基础知识的就点开这个文章<a href="http://www.21ic.com/jichuzhishi/analog/questions/2013-05-17/181650.html" target="_blank" rel="noopener">“什么是TTL电平、CMOS电平”</a>，看完后就可以知道TTL/CMOS电平的由来。</p>
+<a id="more"></a>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    YiYunC
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yiyunc.me/2018/08/16/UART通信协议/" title="UART基础知识和裸机编程">http://yiyunc.me/2018/08/16/UART通信协议/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/10/ARM芯片时钟体系/" rel="next" title="ARM芯片时钟体系">
+                <i class="fa fa-chevron-left"></i> ARM芯片时钟体系
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -344,6 +486,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -589,6 +735,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

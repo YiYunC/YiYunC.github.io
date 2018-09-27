@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[UART基础知识和裸机编程]]></title>
     <url>%2F2018%2F08%2F16%2FUART%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%2F</url>
-    <content type="text"><![CDATA[串口通信是嵌入式里很基础的一个东西。常说的串口一般指的是UART，有4-pin杜邦头(VCC,GND,RX,TX),使用的是TTL电平。而COM口就是电脑上常用的那种9-pin插头，使用的是RS-232电平。 TTL电平： RS-232电平： 两者的对比可以去看看这篇老文章“RS-232 vs. TTL Serial Communication”。需要补充基础知识的就点开这个文章“什么是TTL电平、CMOS电平”，看完后就可以知道TTL/CMOS电平的由来。]]></content>
+    <content type="text"><![CDATA[串口通信是嵌入式里很基础的一个东西。常说的串口一般指的是UART，有4-pin杜邦头(VCC,GND,RX,TX),使用的是TTL电平。而COM口就是电脑上常用的那种9-pin插头，使用的是RS-232电平。 TTL电平、RS-232电平： 两者的对比可以去看看这篇老文章“RS-232 vs. TTL Serial Communication”。需要补充基础知识的就点开这个文章“什么是TTL电平、CMOS电平”。]]></content>
   </entry>
   <entry>
     <title><![CDATA[ARM芯片时钟体系]]></title>

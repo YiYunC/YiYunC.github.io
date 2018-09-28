@@ -17,7 +17,7 @@
 <meta property="og:description" content="小端（Little endian)：低字节存在内存的低地址中，高字节存在内存的高地址中。大端（Big endian）：低字节存在内存的高地址中，高字节存在内存的低地址中。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-13/71015735.jpg">
-<meta property="og:updated_time" content="2018-09-28T05:45:20.801Z">
+<meta property="og:updated_time" content="2018-09-28T05:46:44.387Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="判断CPU的大小端字节序">
 <meta name="twitter:description" content="小端（Little endian)：低字节存在内存的低地址中，高字节存在内存的高地址中。大端（Big endian）：低字节存在内存的高地址中，高字节存在内存的低地址中。">
@@ -229,7 +229,7 @@ var _hmt = _hmt || [];
 <p><strong>两台主机之间通过TCP/IP协议进行通信的时候，在向对方发送报文前，都需要调用相应的函数把自己的主机序（Little endian）模式转换成网络序（Big endian）模式;同样，在接收到对方的报文信息后，都需要将网络序转换成主机序，即将报文从Big endian转换成Little endian</strong>。</p>
 </blockquote>
 <p>Little endian优点：强制转换数据型不需要再调整字节。<br>Big endian优点：有符号数，其字节最高位不仅表示数值本身，还起到了符号的作用。</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#include <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">int</span> main()</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">int</span> a = <span class="number">0x12345678</span>;</span><br><span class="line">  <span class="keyword">char</span> *p;</span><br><span class="line">  p = ( <span class="keyword">char</span> *)&amp;a;</span><br><span class="line">  <span class="keyword">if</span> (*p == <span class="number">0x12</span>)</span><br><span class="line">  &#123;</span><br><span class="line">  printf(<span class="string">"Big endian\n"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">  printf(<span class="string">"Little endian\n"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;   </span><br></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#include <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">int</span> main()</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">int</span> a = <span class="number">0x12345678</span>;</span><br><span class="line">  <span class="keyword">char</span> *p;</span><br><span class="line">  p = ( <span class="keyword">char</span> *)&amp;a;</span><br><span class="line">  <span class="keyword">if</span> (*p == <span class="number">0x12</span>)</span><br><span class="line">  printf(<span class="string">"Big endian\n"</span>);</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  printf(<span class="string">"Little endian\n"</span>);</span><br><span class="line">&#125;   </span><br></pre></td></tr></table></figure>
 
       
 
@@ -549,6 +549,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">裸机</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">ARM时钟</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">S3C2440</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -9,7 +9,7 @@
   <title>ARM芯片时钟体系 | YiYunC blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="以前用STM32板子的时候，没有仔细看过ARM芯片的时钟体系，“拿来主义”贯彻到底，这次写篇文章来总结顺便复习下ARM芯片时钟体系的构成。">
-<meta name="keywords" content="裸机">
+<meta name="keywords" content="裸机,ARM时钟,S3C2440">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ARM芯片时钟体系">
 <meta property="og:url" content="https://yiyunc.me/2018/08/10/ARM芯片时钟体系/index.html">
@@ -25,7 +25,7 @@
 <meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/73806757.jpg">
 <meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/20349431.jpg">
 <meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-13/53274620.jpg">
-<meta property="og:updated_time" content="2018-09-28T05:13:13.427Z">
+<meta property="og:updated_time" content="2018-09-28T05:59:59.536Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ARM芯片时钟体系">
 <meta name="twitter:description" content="以前用STM32板子的时候，没有仔细看过ARM芯片的时钟体系，“拿来主义”贯彻到底，这次写篇文章来总结顺便复习下ARM芯片时钟体系的构成。">
@@ -234,7 +234,7 @@ var _hmt = _hmt || [];
 		
 		<p>以前用STM32板子的时候，没有仔细看过ARM芯片的时钟体系，<strong>“拿来主义”</strong>贯彻到底，这次写篇文章来总结顺便复习下ARM芯片时钟体系的构成。<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-13/35675173.jpg" alt=""></p>
 <a id="more"></a>
-<h1 id="一、JZ2440"><a href="#一、JZ2440" class="headerlink" title="一、JZ2440"></a>一、JZ2440</h1><p>最近在学习嵌入式Linux开发，用的S3C2440芯片的板子，板子外接的晶振频率为12MHz，需要通过时钟控制逻辑的PLL（锁相环）提高系统时钟。</p>
+<h1 id="一、S3C2440"><a href="#一、S3C2440" class="headerlink" title="一、S3C2440"></a>一、S3C2440</h1><p>最近在学习嵌入式Linux开发，用的S3C2440芯片的板子，板子外接的晶振频率为12MHz，需要通过时钟控制逻辑的PLL（锁相环）提高系统时钟。</p>
 <p>时钟控制逻辑提供了3种时钟：<br>1.FCLK用于CPU核。</p>
 <p>2.HCLK用于AHB总线上的设备（频率相对较高），H可以理解为high，如CPU核、Memory CONT.、Interrupt CONT.、LCD控制器、DMA等。<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/3215543.jpg" alt=""></p>
 <p>3.PCLK用于APB总线上的设备（频率相对较低），P可以理解为peripheral，如Watchdog、I2C、SPI、UART、SPI、GPIO等外设。</p>
@@ -250,53 +250,15 @@ var _hmt = _hmt || [];
 </ul>
 <h2 id="2-PLL寄存器的设定"><a href="#2-PLL寄存器的设定" class="headerlink" title="2.PLL寄存器的设定"></a>2.PLL寄存器的设定</h2><p>接下来重要的是PLL的设定，主要由CLKDIVN、CAMDIVN、MPLLCON这几个寄存器来设定（UPLLCON暂时不讲）。</p>
 <p>CLKDIVN寄存器是用来设定FCLK、HCLK、PCLK这三者一些简单的比例关系，一些比较特殊的比例关系就要用到CAMDIVN寄存器。</p>
-<p>MPLLCON寄存器是设定FCLK与<strong>晶振频率（Fin）</strong>的倍数，芯片手册有相应的公式：</p>
-<pre><code>Mpll = (2 * m * Fin) / (p * 2^S)
-* m = (MDIV + 8), p = (PDIV + 2), s = SDIV
-</code></pre><p>通过公式简单计算可以得到MDIV、PDIV、SDIV的值，再通过移位操作设定寄存器的值。<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/20349431.jpg" alt=""></p>
+<p>MPLLCON寄存器是设定FCLK与<strong>晶振频率（Fin）</strong>的倍数，芯片手册有相应的公式：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mpll = (<span class="number">2</span> * m * Fin) / (p * <span class="number">2</span>^S)</span><br><span class="line">m = (MDIV + <span class="number">8</span>), p = (PDIV + <span class="number">2</span>), s = SDIV</span><br></pre></td></tr></table></figure></p>
+<p>通过公式简单计算可以得到MDIV、PDIV、SDIV的值，再通过移位操作设定寄存器的值。<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/20349431.jpg" alt=""></p>
 <h2 id="3-CPU-bus-mode"><a href="#3-CPU-bus-mode" class="headerlink" title="3.CPU bus mode"></a>3.CPU bus mode</h2><p>芯片手册第七章看完，会看到一个NOTE:<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-13/53274620.jpg" alt=""></p>
-<p>这里说到当HDIVN不为0，必须执行以下指令将CPU bus mode更改成asynchronous bus mode（异步总线模式）：</p>
-<pre><code>MMU_SetAsyncBusMode
-mrc p15,0,r0,c1,c0,0
-orr r0,r0,#R1_nF:OR:R1_iA   //R1_nF:OR:R1_iA==0xc0000000
-mcr p15,0,r0,c1,c0,0
-</code></pre><p>而当HDIVN不为0且CPU bus mode是fast bus mode（快速总线模式）时，CPU工作频率将变为HCLK，不再是FCLK。</p>
+<p>这里说到当HDIVN不为0，必须执行以下指令将CPU bus mode更改成asynchronous bus mode（异步总线模式）：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MMU_SetAsyncBusMode</span><br><span class="line">mrc p15,<span class="number">0</span>,r0,c1,c0,<span class="number">0</span></span><br><span class="line">orr r0,r0,<span class="meta">#R1_nF:OR:R1_iA   //R1_nF:OR:R1_iA==0xc0000000</span></span><br><span class="line">mcr p15,<span class="number">0</span>,r0,c1,c0,<span class="number">0</span></span><br></pre></td></tr></table></figure></p>
+<p>而当HDIVN不为0且CPU bus mode是fast bus mode（快速总线模式）时，CPU工作频率将变为HCLK，不再是FCLK。</p>
 <p>下面以设置FCLK=400MHz，HCLK=400MHz，PCLK=400MHz为例子写出部分代码。</p>
 <hr>
-<pre><code>/* 设定Lock Time的值-&gt;初始值 */
-ldr r0, =0x4C000000    //address
-ldr r1, =0xFFFFFFFF    //Reset Value
-str r1, [r0]           
-
-/* 设定CPU总线模式-&gt;异步模式 */
-mrc p15,0,r0,c1,c0,0
-orr r0,r0,#0xc0000000  //R1_nF:OR:R1_iA
-mcr p15,0,r0,c1,c0,0
-
-/* 设定CLKDIVN的值-&gt; FCLK : HCLK : PCLK = 8 : 4 : 1 */
-ldr r0, =0x4C000014    //address
-ldr r1, =0x5           //set Value: [3:0]=101
-str r1, [r0]           
-
-/* 设定CLKDIVN的值-&gt;设置其他频率比例的寄存器 */
-//ldr r0, =0x4C000018    //address
-//ldr r1, =0x           //set Value
-//str r1, [r0] 
-
-/* 设定MPLLCON的值输出PLL
- * Mpll = (2 * m * Fin) / (p * 2^S)
- * m = (MDIV + 8), p = (PDIV + 2), s = SDIV
- * 查表计算得MDIV = 92, PDIV = 1, SDIV = 1
- * Output Frequency = 400 MHz
- */
-ldr r0, =0x4C000004              //address
-ldr r1, =(92&lt;&lt;12)|(1&lt;&lt;4)|(1&lt;&lt;0)  //set Value
-str r1, [r0]
-
-/* 一旦设置PLL,就会锁定LOCK TIME直到PLL输出稳定
- * 然后CPU工作于新的频率FCLK
- */           
-</code></pre><h1 id="二、STM32F103"><a href="#二、STM32F103" class="headerlink" title="二、STM32F103"></a>二、STM32F103</h1><p>以前用的板子芯片是STM32F103VET6。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 设定Lock Time的值-&gt;初始值 */</span></span><br><span class="line">ldr r0, =<span class="number">0x4C000000</span>    <span class="comment">//address</span></span><br><span class="line">ldr r1, =<span class="number">0xFFFFFFFF</span>    <span class="comment">//Reset Value</span></span><br><span class="line">str r1, [r0]           </span><br><span class="line"></span><br><span class="line"><span class="comment">/* 设定CPU总线模式-&gt;异步模式 */</span></span><br><span class="line">mrc p15,<span class="number">0</span>,r0,c1,c0,<span class="number">0</span></span><br><span class="line">orr r0,r0,<span class="meta">#0xc0000000  //R1_nF:OR:R1_iA</span></span><br><span class="line">mcr p15,<span class="number">0</span>,r0,c1,c0,<span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 设定CLKDIVN的值-&gt; FCLK : HCLK : PCLK = 8 : 4 : 1 */</span></span><br><span class="line">ldr r0, =<span class="number">0x4C000014</span>    <span class="comment">//address</span></span><br><span class="line">ldr r1, =<span class="number">0x5</span>           <span class="comment">//set Value: [3:0]=101</span></span><br><span class="line">str r1, [r0]           </span><br><span class="line"></span><br><span class="line"><span class="comment">/* 设定CLKDIVN的值-&gt;设置其他频率比例的寄存器 */</span></span><br><span class="line"><span class="comment">//ldr r0, =0x4C000018    //address</span></span><br><span class="line"><span class="comment">//ldr r1, =0x           //set Value</span></span><br><span class="line"><span class="comment">//str r1, [r0] </span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 设定MPLLCON的值输出PLL</span></span><br><span class="line"><span class="comment"> * Mpll = (2 * m * Fin) / (p * 2^S)</span></span><br><span class="line"><span class="comment"> * m = (MDIV + 8), p = (PDIV + 2), s = SDIV</span></span><br><span class="line"><span class="comment"> * 查表计算得MDIV = 92, PDIV = 1, SDIV = 1</span></span><br><span class="line"><span class="comment"> * Output Frequency = 400 MHz</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">ldr r0, =<span class="number">0x4C000004</span>              <span class="comment">//address</span></span><br><span class="line">ldr r1, =(<span class="number">92</span>&lt;&lt;<span class="number">12</span>)|(<span class="number">1</span>&lt;&lt;<span class="number">4</span>)|(<span class="number">1</span>&lt;&lt;<span class="number">0</span>)  <span class="comment">//set Value</span></span><br><span class="line">str r1, [r0]</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 一旦设置PLL,就会锁定LOCK TIME直到PLL输出稳定</span></span><br><span class="line"><span class="comment"> * 然后CPU工作于新的频率FCLK</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+<h1 id="二、STM32F103"><a href="#二、STM32F103" class="headerlink" title="二、STM32F103"></a>二、STM32F103</h1><p>以前用的STM32板子芯片是STM32F103VET6,其时钟的配置全都可以调用固件库轻易完成。<br>我们可以看看STM32的官方手册里，有芯片时钟体系的整体框图，</p>
 <hr>
 <p>持续更新中……….</p>
 
@@ -354,6 +316,14 @@ str r1, [r0]
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">裸机</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">ARM时钟</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">S3C2440</a>
         		</li>
       		
 		</ul>
@@ -461,7 +431,7 @@ str r1, [r0]
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、JZ2440"><span class="toc-number">1.</span> <span class="toc-text">一、JZ2440</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#"><span class="toc-number">1.1.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-上电复位序列图"><span class="toc-number">1.2.</span> <span class="toc-text">1.上电复位序列图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-PLL寄存器的设定"><span class="toc-number">1.3.</span> <span class="toc-text">2.PLL寄存器的设定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-CPU-bus-mode"><span class="toc-number">1.4.</span> <span class="toc-text">3.CPU bus mode</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、STM32F103"><span class="toc-number">2.</span> <span class="toc-text">二、STM32F103</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、S3C2440"><span class="toc-number">1.</span> <span class="toc-text">一、S3C2440</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#"><span class="toc-number">1.1.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-上电复位序列图"><span class="toc-number">1.2.</span> <span class="toc-text">1.上电复位序列图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-PLL寄存器的设定"><span class="toc-number">1.3.</span> <span class="toc-text">2.PLL寄存器的设定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-CPU-bus-mode"><span class="toc-number">1.4.</span> <span class="toc-text">3.CPU bus mode</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、STM32F103"><span class="toc-number">2.</span> <span class="toc-text">二、STM32F103</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -614,6 +584,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">裸机</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">ARM时钟</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">S3C2440</a>
               </li>
              
               <li class="article-tag-list-item">

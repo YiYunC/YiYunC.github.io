@@ -21,7 +21,7 @@
 <meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/61882237.jpg">
 <meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/66456455.jpg">
 <meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-4/59423392.jpg">
-<meta property="og:updated_time" content="2018-09-28T05:30:50.923Z">
+<meta property="og:updated_time" content="2018-09-28T05:41:49.354Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在github上创建个人博客">
 <meta name="twitter:description" content="因缘巧合之下看到有人利用博客记录每天的学习笔记，觉得这也不失为一个学习提升自己的好方式，希望能借此激励自己每天持续学习和思考。于是看了很多网上的教程做准备，进行第一次搭建个人博客，写下本文总结搭建的过程以及遇到的一些问题。  本文主要目的是快速搭建，适合那些只是用来记录一些东西，不想做太多折腾的小白。">
@@ -239,15 +239,15 @@ var _hmt = _hmt || [];
 <ul>
 <li><strong>这里推荐一个神器：<a href="https://jeffjade.com/2016/01/13/2016-01-13-windows-software-cmder/" target="_blank" rel="noopener">cmder</a>，功能强大，比windows自带的cmd好用很多。（注：cmder最好解压放在磁盘的根目录下）</strong></li>
 </ul>
-<h3 id="2-2-Git配置"><a href="#2-2-Git配置" class="headerlink" title="2.2 Git配置"></a>2.2 Git配置</h3><p>Git安装完成后，打开Git Bash，第一次打开需要设置username和email；</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">"YiYunC"</span>   <span class="meta">#与注册的账号邮箱一致；</span></span><br><span class="line">git config --global user.email <span class="string">"chenyiyun940920@gmail.com"</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-2-Git配置"><a href="#2-2-Git配置" class="headerlink" title="2.2 Git配置"></a>2.2 Git配置</h3><p>Git安装完成后，打开Git Bash，第一次打开需要设置username和email；<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">"YiYunC"</span>   <span class="meta">#与注册的账号邮箱一致；</span></span><br><span class="line">git config --global user.email <span class="string">"chenyiyun940920@gmail.com"</span></span><br></pre></td></tr></table></figure></p>
 <p>在F盘新建一个名为blog的文件夹作为仓库，在命令行里输入：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /f/blog    <span class="meta">#进入F盘的blog文件夹；</span></span><br><span class="line">git init      <span class="meta">#初始化当前文件夹作为本地仓库（生成.git文件夹）;</span></span><br></pre></td></tr></table></figure></p>
 <h3 id="2-3-配置SSH-keys"><a href="#2-3-配置SSH-keys" class="headerlink" title="2.3 配置SSH keys"></a>2.3 配置SSH keys</h3><p>先检查下电脑用户主目录下，有没有.ssh文件夹，看看有没有id_rsa和id_rsa.pub，有的话直接跳到下一步。<br>如果没有，在Git Bash里输入命令，生成新的SSH Key:<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">"chenyiyun940920@gmail.com"</span></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file <span class="keyword">in</span> which to save the key (/Users/your_user_directory/.ssh/id_rsa):&lt;回车就好&gt;</span><br></pre></td></tr></table></figure></p>
 <p>接下来就是设置加密密码串（6位），可以不设置。<br>ssh key设置成功的界面忘记截图了。<br>上述步骤以及添加SSH Key到GitHub的步骤详见<a href="https://blog.csdn.net/hitwhylz/article/details/42646197" target="_blank" rel="noopener">利用Github免费搭建个人主页(个人博客)</a></p>
 <h2 id="3-Node-js安装"><a href="#3-Node-js安装" class="headerlink" title="3.Node.js安装"></a>3.Node.js安装</h2><p>到Nodejs<a href="https://nodejs.org/en/" target="_blank" rel="noopener">官网</a>下载，默认安装即可。</p>
 <hr>
 <h2 id="4-Hexo安装与配置"><a href="#4-Hexo安装与配置" class="headerlink" title="4.Hexo安装与配置"></a>4.Hexo安装与配置</h2><h3 id="4-1-Hexo安装"><a href="#4-1-Hexo安装" class="headerlink" title="4.1 Hexo安装"></a>4.1 Hexo安装</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-<h3 id="4-2-Hexo配置"><a href="#4-2-Hexo配置" class="headerlink" title="4.2 Hexo配置"></a>4.2 Hexo配置</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd /f/blog</span><br><span class="line">hexo init blog</span><br><span class="line">hexo g <span class="meta">#启动本地服务器</span></span><br><span class="line">hexo s <span class="meta">#在浏览器输入http://localhost:4000/就可以看见网页和模板了</span></span><br></pre></td></tr></table></figure>
+### 4.2 Hexo配置 ###
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd /f/blog</span><br><span class="line">hexo init blog</span><br><span class="line">hexo g <span class="meta">#启动本地服务器</span></span><br><span class="line">hexo s <span class="meta">#在浏览器输入http://localhost:4000/就可以看见网页和模板了</span></span><br></pre></td></tr></table></figure>
 <p>注意：进入<a href="http://localhost:4000/页面前，Git" target="_blank" rel="noopener">http://localhost:4000/页面前，Git</a> Bash里不要按下ctrl+c和ctrl+v，不然该页面将停止加载。</p>
 <hr>
 <h1 id="三、博客配置和主题优化"><a href="#三、博客配置和主题优化" class="headerlink" title="三、博客配置和主题优化"></a>三、博客配置和主题优化</h1><h2 id="1-博客配置"><a href="#1-博客配置" class="headerlink" title="1. 博客配置"></a>1. 博客配置</h2><p>用文本编辑器打开blog根目录下的<strong>_config.yml</strong>文件，我自己用的是<a href="https://pan.baidu.com/s/15yqX5us7xbnveMH6fb9oSg" target="_blank" rel="noopener">Notepad++</a>，其实用<a href="http://www.sublimetext.com/3" target="_blank" rel="noopener">Sublime Text</a>会更好，因为Sublime Text默认打开格式是UTF-8编码，而Notepad++还需要手动设置；一般博客中文出现乱码，大多数是因为配置文件的格式不是URF-8编码。</p>
@@ -462,7 +462,7 @@ var _hmt = _hmt || [];
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、前言"><span class="toc-number">1.</span> <span class="toc-text">一、前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、准备工作"><span class="toc-number">2.</span> <span class="toc-text">二、准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-创建GitHub仓库"><span class="toc-number">2.1.</span> <span class="toc-text">1. 创建GitHub仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Git安装与配置"><span class="toc-number">2.2.</span> <span class="toc-text">2. Git安装与配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Git安装"><span class="toc-number">2.2.1.</span> <span class="toc-text">2.1 Git安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Git配置"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.2 Git配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-配置SSH-keys"><span class="toc-number">2.2.3.</span> <span class="toc-text">2.3 配置SSH keys</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Node-js安装"><span class="toc-number">2.3.</span> <span class="toc-text">3.Node.js安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Hexo安装与配置"><span class="toc-number">2.4.</span> <span class="toc-text">4.Hexo安装与配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-Hexo安装"><span class="toc-number">2.4.1.</span> <span class="toc-text">4.1 Hexo安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-Hexo配置"><span class="toc-number">2.4.2.</span> <span class="toc-text">4.2 Hexo配置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、博客配置和主题优化"><span class="toc-number">3.</span> <span class="toc-text">三、博客配置和主题优化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-博客配置"><span class="toc-number">3.1.</span> <span class="toc-text">1. 博客配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-主题配置"><span class="toc-number">3.2.</span> <span class="toc-text">2. 主题配置</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#六、结束语"><span class="toc-number">4.</span> <span class="toc-text">六、结束语</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、前言"><span class="toc-number">1.</span> <span class="toc-text">一、前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、准备工作"><span class="toc-number">2.</span> <span class="toc-text">二、准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-创建GitHub仓库"><span class="toc-number">2.1.</span> <span class="toc-text">1. 创建GitHub仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Git安装与配置"><span class="toc-number">2.2.</span> <span class="toc-text">2. Git安装与配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Git安装"><span class="toc-number">2.2.1.</span> <span class="toc-text">2.1 Git安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Git配置"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.2 Git配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-配置SSH-keys"><span class="toc-number">2.2.3.</span> <span class="toc-text">2.3 配置SSH keys</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Node-js安装"><span class="toc-number">2.3.</span> <span class="toc-text">3.Node.js安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Hexo安装与配置"><span class="toc-number">2.4.</span> <span class="toc-text">4.Hexo安装与配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-Hexo安装"><span class="toc-number">2.4.1.</span> <span class="toc-text">4.1 Hexo安装</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、博客配置和主题优化"><span class="toc-number">3.</span> <span class="toc-text">三、博客配置和主题优化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-博客配置"><span class="toc-number">3.1.</span> <span class="toc-text">1. 博客配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-主题配置"><span class="toc-number">3.2.</span> <span class="toc-text">2. 主题配置</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#六、结束语"><span class="toc-number">4.</span> <span class="toc-text">六、结束语</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -614,19 +614,19 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">裸机</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">字节序</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
               <li class="article-tag-list-item">

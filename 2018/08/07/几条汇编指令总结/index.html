@@ -17,7 +17,7 @@
 <meta property="og:description" content="总结几条比较常用的汇编指令。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-13/8692156.jpg">
-<meta property="og:updated_time" content="2018-09-28T05:36:12.639Z">
+<meta property="og:updated_time" content="2018-09-28T05:43:04.856Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="几条汇编指令总结">
 <meta name="twitter:description" content="总结几条比较常用的汇编指令。">
@@ -233,7 +233,7 @@ var _hmt = _hmt || [];
 store，写内存。
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">STR R0,[R1]</span><br></pre></td></tr></table></figure><br>假设R1的值是x，把R0的值写到地址x（4字节）上。</p>
 <h2 id="3-B"><a href="#3-B" class="headerlink" title="3.B"></a>3.B</h2><p>back，跳转</p>
-<h2 id="4-MOV"><a href="#4-MOV" class="headerlink" title="4.MOV"></a>4.MOV</h2><p>move，赋值。<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line">MOV R0,R1       :R0=R1</span><br><span class="line">MOV R0，<span class="meta">#0x100  :R0=0x100。</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="4-MOV"><a href="#4-MOV" class="headerlink" title="4.MOV"></a>4.MOV</h2><p>move，赋值。<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MOV R0,R1       :R0=R1</span><br><span class="line">MOV R0，<span class="meta">#0x100  :R0=0x100。</span></span><br></pre></td></tr></table></figure></p>
 <h2 id="5-伪指令"><a href="#5-伪指令" class="headerlink" title="5.伪指令"></a>5.伪指令</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LDR R0，=<span class="number">0x12345678</span>  :R0=<span class="number">0x12345678</span></span><br></pre></td></tr></table></figure>
 这条指令会被拆分成几条真正的RAM指令。
 为什么会有伪指令的存在，例如MOV RO，#0x12345678这条指令是错误的，因为32位的ARM指令中总有一位表示MOV，还有一位表示R0，剩下的位数不足32位，不能表示任意数，只能表示简单值（叫做**立即数**）。
@@ -568,19 +568,19 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">裸机</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">字节序</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
               <li class="article-tag-list-item">

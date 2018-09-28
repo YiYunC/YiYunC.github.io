@@ -9,7 +9,7 @@
   <title>几条汇编指令总结 | YiYunC blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="总结几条比较常用的汇编指令。">
-<meta name="keywords" content="随笔">
+<meta name="keywords" content="随笔,汇编">
 <meta property="og:type" content="article">
 <meta property="og:title" content="几条汇编指令总结">
 <meta property="og:url" content="https://yiyunc.me/2018/08/07/几条汇编指令总结/index.html">
@@ -17,7 +17,7 @@
 <meta property="og:description" content="总结几条比较常用的汇编指令。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://pcwv6qdfo.bkt.clouddn.com/18-8-13/8692156.jpg">
-<meta property="og:updated_time" content="2018-09-28T05:13:36.328Z">
+<meta property="og:updated_time" content="2018-09-28T05:36:12.639Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="几条汇编指令总结">
 <meta name="twitter:description" content="总结几条比较常用的汇编指令。">
@@ -226,21 +226,30 @@ var _hmt = _hmt || [];
 		
 		<p>总结几条比较常用的汇编指令。<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-13/8692156.jpg" alt=""></p>
 <a id="more"></a>
-<h2 id="1-LDR"><a href="#1-LDR" class="headerlink" title="1.LDR"></a>1.LDR</h2><p>load，读内存。<br>    LDR R0,[R1]<br>假设R1的值是x，读取地址x上的数据（4字节），保存到R0中。</p>
-<h2 id="2-STR"><a href="#2-STR" class="headerlink" title="2.STR"></a>2.STR</h2><p>store，写内存。<br>    STR R0,[R1]<br>假设R1的值是x，把R0的值写到地址x（4字节）上。</p>
+<h2 id="1-LDR"><a href="#1-LDR" class="headerlink" title="1.LDR"></a>1.LDR</h2><p>load，读内存。<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LDR R0,[R1]</span><br></pre></td></tr></table></figure>
+假设R1的值是x，读取地址x上的数据（4字节），保存到R0中。
+
+## 2.STR ##
+store，写内存。
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">STR R0,[R1]</span><br></pre></td></tr></table></figure><br>假设R1的值是x，把R0的值写到地址x（4字节）上。</p>
 <h2 id="3-B"><a href="#3-B" class="headerlink" title="3.B"></a>3.B</h2><p>back，跳转</p>
-<h2 id="4-MOV"><a href="#4-MOV" class="headerlink" title="4.MOV"></a>4.MOV</h2><p>move，赋值。<br>    MOV R0,R1       :R0=R1<br>    MOV R0，#0x100  :R0=0x100。</p>
-<h2 id="5-伪指令"><a href="#5-伪指令" class="headerlink" title="5.伪指令"></a>5.伪指令</h2><pre><code>LDR R0，=0x12345678  :R0=0x12345678
-</code></pre><p>这条指令会被拆分成几条真正的RAM指令。<br>为什么会有伪指令的存在，例如MOV RO，#0x12345678这条指令是错误的，因为32位的ARM指令中总有一位表示MOV，还有一位表示R0，剩下的位数不足32位，不能表示任意数，只能表示简单值（叫做<strong>立即数</strong>）。</p>
-<h2 id="6-add、sub"><a href="#6-add、sub" class="headerlink" title="6.add、sub"></a>6.add、sub</h2><pre><code>add r0,r1,#4  :r0=r1+4
-sub r0,r1,#4  :r0=r1-4
-sub r0,r1,r2  :r0=r1-r2
-</code></pre><h2 id="7-BL"><a href="#7-BL" class="headerlink" title="7.BL"></a>7.BL</h2><p><strong>branch and link</strong><br>bl xxx表示：1.跳到xxx;2.把返回地址（下一条指令的地址）保存在lr寄存器中。</p>
+<h2 id="4-MOV"><a href="#4-MOV" class="headerlink" title="4.MOV"></a>4.MOV</h2><p>move，赋值。<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line">MOV R0,R1       :R0=R1</span><br><span class="line">MOV R0，<span class="meta">#0x100  :R0=0x100。</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="5-伪指令"><a href="#5-伪指令" class="headerlink" title="5.伪指令"></a>5.伪指令</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LDR R0，=<span class="number">0x12345678</span>  :R0=<span class="number">0x12345678</span></span><br></pre></td></tr></table></figure>
+这条指令会被拆分成几条真正的RAM指令。
+为什么会有伪指令的存在，例如MOV RO，#0x12345678这条指令是错误的，因为32位的ARM指令中总有一位表示MOV，还有一位表示R0，剩下的位数不足32位，不能表示任意数，只能表示简单值（叫做**立即数**）。
+
+
+## 6.add、sub ##
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">add r0,r1,<span class="meta">#4  :r0=r1+4</span></span><br><span class="line">sub r0,r1,<span class="meta">#4  :r0=r1-4</span></span><br><span class="line">sub r0,r1,r2  :r0=r1-r2</span><br></pre></td></tr></table></figure>
+<h2 id="7-BL"><a href="#7-BL" class="headerlink" title="7.BL"></a>7.BL</h2><p><strong>branch and link</strong><br>bl xxx表示：1.跳到xxx;2.把返回地址（下一条指令的地址）保存在lr寄存器中。</p>
 <h2 id="8-ldm、stm"><a href="#8-ldm、stm" class="headerlink" title="8.ldm、stm"></a>8.ldm、stm</h2><p>ldm:读内存，写入多个寄存器。<br>stm:把多个寄存器的值写入内存。<br>ldmia（increment after）：过后增加<br>stmdb（decrement before）：预先减少</p>
-<h3 id="stmdb"><a href="#stmdb" class="headerlink" title="stmdb"></a>stmdb</h3><pre><code>stmdb sp!,{fp,ip,lr,pc}
-</code></pre><p>这条指令中，首先假设sp=4096，那么由stmdb可知1.先减sp’=sp-4=4092;2.后存4092~4095存放pc的值；3.先减sp’=sp-4=4088;4.后存4088~4091存放lr的值；…..依次循环。其中sp!表示sp=最终的被修改的sp值4080。<br>注：高编号寄存器存在高地址，fp、ip、sp、ls、pc的编号分别是r11、r12、r13、r14、r15。</p>
-<h3 id="ldmia"><a href="#ldmia" class="headerlink" title="ldmia"></a>ldmia</h3><pre><code>ldmia sp,{fp,sp,pc}
-</code></pre><p>这条指令中，由ldmia可知1.先读fp=4080~4083的值即原来保存的fp；2.后增sp’=sp+4=4084;3.先读sp=4084~4087的值即原来保存的ip;4.后增sp’=sp+4=4088；…..依次循环。其中sp无!则表示修改后的地址值不存入sp。</p>
+<h3 id="stmdb"><a href="#stmdb" class="headerlink" title="stmdb"></a>stmdb</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stmdb sp!,&#123;fp,ip,lr,pc&#125;</span><br></pre></td></tr></table></figure>
+这条指令中，首先假设sp=4096，那么由stmdb可知1.先减sp'=sp-4=4092;2.后存4092~4095存放pc的值；3.先减sp'=sp-4=4088;4.后存4088~4091存放lr的值；.....依次循环。其中sp!表示sp=最终的被修改的sp值4080。
+注：高编号寄存器存在高地址，fp、ip、sp、ls、pc的编号分别是r11、r12、r13、r14、r15。
+
+### ldmia ###
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ldmia sp,&#123;fp,sp,pc&#125;</span><br></pre></td></tr></table></figure>
+<p>这条指令中，由ldmia可知1.先读fp=4080~4083的值即原来保存的fp；2.后增sp’=sp+4=4084;3.先读sp=4084~4087的值即原来保存的ip;4.后增sp’=sp+4=4088；…..依次循环。其中sp无!则表示修改后的地址值不存入sp。</p>
 
       
 
@@ -296,6 +305,10 @@ sub r0,r1,r2  :r0=r1-r2
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">汇编</a>
         		</li>
       		
 		</ul>
@@ -403,7 +416,7 @@ sub r0,r1,r2  :r0=r1-r2
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-LDR"><span class="toc-number">1.</span> <span class="toc-text">1.LDR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-STR"><span class="toc-number">2.</span> <span class="toc-text">2.STR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-B"><span class="toc-number">3.</span> <span class="toc-text">3.B</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-MOV"><span class="toc-number">4.</span> <span class="toc-text">4.MOV</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-伪指令"><span class="toc-number">5.</span> <span class="toc-text">5.伪指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-add、sub"><span class="toc-number">6.</span> <span class="toc-text">6.add、sub</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-BL"><span class="toc-number">7.</span> <span class="toc-text">7.BL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-ldm、stm"><span class="toc-number">8.</span> <span class="toc-text">8.ldm、stm</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#stmdb"><span class="toc-number">8.1.</span> <span class="toc-text">stmdb</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ldmia"><span class="toc-number">8.2.</span> <span class="toc-text">ldmia</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-LDR"><span class="toc-number">1.</span> <span class="toc-text">1.LDR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-B"><span class="toc-number">2.</span> <span class="toc-text">3.B</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-MOV"><span class="toc-number">3.</span> <span class="toc-text">4.MOV</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-伪指令"><span class="toc-number">4.</span> <span class="toc-text">5.伪指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-BL"><span class="toc-number">5.</span> <span class="toc-text">7.BL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-ldm、stm"><span class="toc-number">6.</span> <span class="toc-text">8.ldm、stm</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#stmdb"><span class="toc-number">6.1.</span> <span class="toc-text">stmdb</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -555,11 +568,23 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">裸机</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color4">字节序</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">github+hexo</a>
               </li>
             
             <div class="clearfix"></div>

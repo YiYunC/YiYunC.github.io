@@ -3,10 +3,17 @@
   "version": "0.0.0",
   "private": true,
   "hexo": {
+<<<<<<< HEAD
     "version": "3.8.0"
   },
   "dependencies": {
     "hexo": "^3.8.0",
+=======
+    "version": "3.7.1"
+  },
+  "dependencies": {
+    "hexo": "^3.2.0",
+>>>>>>> c629bc89298d7c1433ea9efae008a21745e45aa8
     "hexo-deployer-git": "^0.3.1",
     "hexo-generator-archive": "^0.1.4",
     "hexo-generator-baidu-sitemap": "^0.1.2",
@@ -20,4 +27,8 @@
     "hexo-renderer-stylus": "^0.3.1",
     "hexo-server": "^0.2.0"
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> c629bc89298d7c1433ea9efae008a21745e45aa8

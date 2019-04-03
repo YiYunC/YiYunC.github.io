@@ -3,12 +3,21 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
+<<<<<<< HEAD
 title: 闲·趣
 subtitle: 书生意气
 description: 
 keywords:
 author: YiYunC
 language: zh-CN
+=======
+title: YiYunC blog
+subtitle: 嵌入式/Linux驱动
+description: 这世界上有一种鸟是没有脚的,它只能一直飞呀飞呀，飞累了就睡在风里，这种鸟一辈子只能下地一次，那一次就是它死亡的时候。
+keywords:
+author: YiYunC
+language: zh-Hans
+>>>>>>> c629bc89298d7c1433ea9efae008a21745e45aa8
 timezone:
 
 # URL
@@ -73,7 +82,11 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
+<<<<<<< HEAD
 theme: diaspora
+=======
+theme: hexo-theme-next-master
+>>>>>>> c629bc89298d7c1433ea9efae008a21745e45aa8
 
 # 搜索
 search:

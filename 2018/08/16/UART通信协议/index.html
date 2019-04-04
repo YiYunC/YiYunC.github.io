@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>UART基础知识和裸机编程 - 闲·趣</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="photo,"> 
+    <meta name="description" content="
+&amp;emsp;&amp;emsp;嵌入式里常说的串口一般指的是UART，4-pin杜邦头(VCC,GND,RX,TX),使用的是TTL/CMOS电平。而COM口就是电脑上常用的那种9-pin插头，使用的是R,"> 
+    <meta name="author" content="YiYunC"> 
+    <link rel="alternative" href="atom.xml" title="闲·趣" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+</head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">闲·趣</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="https://yiyunc.me"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">UART基础知识和裸机编程</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">UART基础知识和裸机编程</h1>
+        <div class="stuff">
+            <span>八月 16, 2018</span>
+            
+  <ul class="post-tags-list"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/UART/">UART</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/裸机/">裸机</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p><img src="https://raw.githubusercontent.com/YiYunC/cloudimg/master/data/r.jpg" alt=""></p>
+<p>&emsp;&emsp;嵌入式里常说的串口一般指的是UART，4-pin杜邦头(VCC,GND,RX,TX),使用的是TTL/CMOS电平。<br>而COM口就是电脑上常用的那种9-pin插头，使用的是RS-232电平。</p>
+<p>&emsp;&emsp;UART，即Universal Asynchronous Receiver and Transmitter,通用异步收发器,包括了TTL、CMOS、RS-232、RS-422和RS-485等接口标准规范和总线标准规范，它规定了通信口的电气特性、传输速率、连接特性和接口的机械特性等内容，这些标准规范属于物理层的概念。<br>UART通信协议，属于通信网络中的数据链路层概念。</p>
+<a id="more"></a>
+<h1 id="1-电平标准"><a href="#1-电平标准" class="headerlink" title="1.电平标准"></a>1.电平标准</h1><p>&emsp;&emsp;首先要知道我们常用的电平TTL和RS-232的区别，可以从下图传输’C’的波形图观察两者的差异。<br><img src="https://raw.githubusercontent.com/YiYunC/cloudimg/master/data/1.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>Tables</th>
+<th style="text-align:center">Logical Level: 0</th>
+<th style="text-align:right">Logical Level: 1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TTL:    V</td>
+<td style="text-align:center">0 ~ x</td>
+<td style="text-align:right">y ~ 5</td>
+</tr>
+<tr>
+<td>RS-232: V</td>
+<td style="text-align:center">+3 ~ +12</td>
+<td style="text-align:right">-3 ~ -12</td>
+</tr>
+</tbody>
+</table>
+<p><font color="#dd0000">注: 1. TTL中x,y值根据电路的情况选定 ; 2. 需要注意的是RS-232和TTL逻辑电平刚好相反。 </font><br></p>
+<p>两者的一些详细对比可以去看看这篇文章<a href="https://www.sparkfun.com/tutorials/215" target="_blank" rel="noopener">“RS-232 vs. TTL Serial Communication”</a>。<br>需要补充基础知识的就点开这个文章<a href="http://www.21ic.com/jichuzhishi/analog/questions/2013-05-17/181650.html" target="_blank" rel="noopener">“什么是TTL电平、CMOS电平”</a>。<br>至于RS-422、RS-485等，这两种电平抗干扰能力强，应用于长距离传输;RS-232一般用于短距离传输。</p>
+<h1 id="2-UART通信协议"><a href="#2-UART通信协议" class="headerlink" title="2.UART通信协议"></a>2.UART通信协议</h1><p>&emsp;&emsp;</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        <li title='0' data-url='http://fs.open.kugou.com/3ccbd5b3c50be0fbfd6e24aa0e2c5fdb/5ca4368f/G011/M01/13/00/q4YBAFT6DhCAaLRzADIFZXM-in8160.mp3'></li>
+                    
+                </ul>
+            
+        </div>
+        
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>

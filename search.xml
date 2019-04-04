@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[不如陪着你]]></title>
+    <url>%2F2019%2F04%2F01%2F%E4%B8%8D%E5%A6%82%E9%99%AA%E7%9D%80%E4%BD%A0%2F</url>
+    <content type="text"><![CDATA[&emsp;&emsp;]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[使用hexo遇到的那些坑]]></title>
+    <url>%2F2019%2F03%2F20%2F%E4%BD%BF%E7%94%A8hexo%E9%81%87%E5%88%B0%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91%2F</url>
+    <content type="text"><![CDATA[hexo博客虽然搭起来很快，很容易上手，但是在使用过程中稍有不慎就会遇到很多坑。 1.备份分支，整合分支遇到的坑，导致我修改过的一些地方全都加上了注释。2.新电脑遇到的一些命令问题大都是npm没有安装，或是没有更新到最新版。]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[UART基础知识和裸机编程]]></title>
+    <url>%2F2018%2F08%2F16%2FUART%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%2F</url>
+    <content type="text"><![CDATA[&emsp;&emsp;嵌入式里常说的串口一般指的是UART，4-pin杜邦头(VCC,GND,RX,TX),使用的是TTL/CMOS电平。而COM口就是电脑上常用的那种9-pin插头，使用的是RS-232电平。 &emsp;&emsp;UART，即Universal Asynchronous Receiver and Transmitter,通用异步收发器,包括了TTL、CMOS、RS-232、RS-422和RS-485等接口标准规范和总线标准规范，它规定了通信口的电气特性、传输速率、连接特性和接口的机械特性等内容，这些标准规范属于物理层的概念。UART通信协议，属于通信网络中的数据链路层概念。 1.电平标准&emsp;&emsp;首先要知道我们常用的电平TTL和RS-232的区别，可以从下图传输’C’的波形图观察两者的差异。 Tables Logical Level: 0 Logical Level: 1 TTL: V 0 ~ x y ~ 5 RS-232: V +3 ~ +12 -3 ~ -12 注: 1. TTL中x,y值根据电路的情况选定 ; 2. 需要注意的是RS-232和TTL逻辑电平刚好相反。 两者的一些详细对比可以去看看这篇文章“RS-232 vs. TTL Serial Communication”。需要补充基础知识的就点开这个文章“什么是TTL电平、CMOS电平”。至于RS-422、RS-485等，这两种电平抗干扰能力强，应用于长距离传输;RS-232一般用于短距离传输。 2.UART通信协议&emsp;&emsp;]]></content>
+      <tags>
+        <tag>裸机</tag>
+        <tag>UART</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[ARM芯片时钟体系]]></title>
+    <url>%2F2018%2F08%2F10%2FARM%E8%8A%AF%E7%89%87%E6%97%B6%E9%92%9F%E4%BD%93%E7%B3%BB%2F</url>
+    <content type="text"><![CDATA[以前用STM32板子的时候，没有仔细看过ARM芯片的时钟体系，“拿来主义”贯彻到底，这次写篇文章来总结顺便复习下ARM芯片时钟体系的构成。 一、S3C2440最近在学习嵌入式Linux开发，用的S3C2440芯片的板子，板子外接的晶振频率为12MHz，需要通过时钟控制逻辑的PLL（锁相环）提高系统时钟。 时钟控制逻辑提供了3种时钟：1.FCLK用于CPU核。 2.HCLK用于AHB总线上的设备（频率相对较高），H可以理解为high，如CPU核、Memory CONT.、Interrupt CONT.、LCD控制器、DMA等。 3.PCLK用于APB总线上的设备（频率相对较低），P可以理解为peripheral，如Watchdog、I2C、SPI、UART、SPI、GPIO等外设。 板子设有两个PLL：MPLL和UPLL。UPLL专用于USB设备，MPLL用来设置FCLK、HCLK、PCLK。 在芯片手册里可以查到FCLK、HCLK、PCLK最高分别为400、136、68MHz。那么如何通过编程把12M的时钟源提高成这些新的时钟是我们接下来分析的问题。 1.上电复位序列图在芯片手册可以找到一个上电复位序列图。仔细推敲这个图，会发现有几个特别的地方：1.刚上电，复位引脚nRESET不是马上拉到高电平；2.OM[3:2]的作用；3.Lock Time里的工作机制。 查看下原理图，会发现nRESET上连接的芯片是IMP811T，网上查找芯片资料 所以等到板子电源稳定后复位引脚才会输出高电平。 OSC是晶体振荡器，EXTCLK是另一个引脚。而OM[3:2]其实就是一个选择器，在下图中可以看出它控制引脚OM3、OM2模式的状态。原理图里可以看到OM2和OM3引脚均接地，所以应该是00的模式，即选择晶振作为时钟源。 引脚OM[3:2]的电平在被内部电路捕获后，PLL就准备开始工作了，Lock Time就是PLL的锁存时间（有初始值，可以由相应寄存器设定），这段时间内，FCLK停振，CPU停止工作，MPLL开始工作；过了Lock Time这段时间后，FCLK=MPLL输出的新时钟，此时CPU重新运行。 小结：OM模式，Lock Time这两个是基础的设定。 2.PLL寄存器的设定接下来重要的是PLL的设定，主要由CLKDIVN、CAMDIVN、MPLLCON这几个寄存器来设定（UPLLCON暂时不讲）。 CLKDIVN寄存器是用来设定FCLK、HCLK、PCLK这三者一些简单的比例关系，一些比较特殊的比例关系就要用到CAMDIVN寄存器。 MPLLCON寄存器是设定FCLK与晶振频率（Fin）的倍数，芯片手册有相应的公式：12Mpll = (2 * m * Fin) / (p * 2^S)m = (MDIV + 8), p = (PDIV + 2), s = SDIV 通过公式简单计算可以得到MDIV、PDIV、SDIV的值，再通过移位操作设定寄存器的值。 3.CPU bus mode芯片手册第七章看完，会看到一个NOTE: 这里说到当HDIVN不为0，必须执行以下指令将CPU bus mode更改成asynchronous bus mode（异步总线模式）：1234MMU_SetAsyncBusModemrc p15,0,r0,c1,c0,0orr r0,r0,#R1_nF:OR:R1_iA //R1_nF:OR:R1_iA==0xc0000000mcr p15,0,r0,c1,c0,0 而当HDIVN不为0且CPU bus mode是fast bus mode（快速总线模式）时，CPU工作频率将变为HCLK，不再是FCLK。 下面以设置FCLK=400MHz，HCLK=400MHz，PCLK=400MHz为例子写出部分代码。 123456789101112131415161718192021222324252627282930313233/* 设定Lock Time的值-&gt;初始值 */ldr r0, =0x4C000000 //addressldr r1, =0xFFFFFFFF //Reset Valuestr r1, [r0] /* 设定CPU总线模式-&gt;异步模式 */mrc p15,0,r0,c1,c0,0orr r0,r0,#0xc0000000 //R1_nF:OR:R1_iAmcr p15,0,r0,c1,c0,0/* 设定CLKDIVN的值-&gt; FCLK : HCLK : PCLK = 8 : 4 : 1 */ldr r0, =0x4C000014 //addressldr r1, =0x5 //set Value: [3:0]=101str r1, [r0] /* 设定CLKDIVN的值-&gt;设置其他频率比例的寄存器 *///ldr r0, =0x4C000018 //address//ldr r1, =0x //set Value//str r1, [r0] /* 设定MPLLCON的值输出PLL * Mpll = (2 * m * Fin) / (p * 2^S) * m = (MDIV + 8), p = (PDIV + 2), s = SDIV * 查表计算得MDIV = 92, PDIV = 1, SDIV = 1 * Output Frequency = 400 MHz */ldr r0, =0x4C000004 //addressldr r1, =(92&lt;&lt;12)|(1&lt;&lt;4)|(1&lt;&lt;0) //set Valuestr r1, [r0]/* 一旦设置PLL,就会锁定LOCK TIME直到PLL输出稳定 * 然后CPU工作于新的频率FCLK */ 二、STM32F103以前用的STM32板子芯片是STM32F103VET6,其时钟的配置全都可以调用固件库轻易完成。我们可以看看STM32的官方手册里，有芯片时钟体系的整体框图， 持续更新中……….]]></content>
+      <tags>
+        <tag>裸机</tag>
+        <tag>ARM时钟</tag>
+        <tag>S3C2440</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[几条汇编指令总结]]></title>
+    <url>%2F2018%2F08%2F07%2F%E5%87%A0%E6%9D%A1%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4%E6%80%BB%E7%BB%93%2F</url>
+    <content type="text"><![CDATA[总结几条比较常用的汇编指令。 1.LDRload，读内存。1LDR R0,[R1]假设R1的值是x，读取地址x上的数据（4字节），保存到R0中。 2.STRstore，写内存。1STR R0,[R1]假设R1的值是x，把R0的值写到地址x（4字节）上。 3.Bback，跳转 4.MOVmove，赋值。12MOV R0,R1 :R0=R1MOV R0，#0x100 :R0=0x100 5.伪指令1LDR R0，=0x12345678 :R0=0x12345678 这条指令会被拆分成几条真正的RAM指令。为什么会有伪指令的存在，例如MOV RO，#0x12345678这条指令是错误的，因为32位的ARM指令中总有一位表示MOV，还有一位表示R0，剩下的位数不足32位，不能表示任意数，只能表示简单值（叫做立即数）。 6.add、sub123add r0,r1,#4 :r0=r1+4sub r0,r1,#4 :r0=r1-4sub r0,r1,r2 :r0=r1-r2 7.BLbranch and linkbl xxx表示：1.跳到xxx;2.把返回地址（下一条指令的地址）保存在lr寄存器中。 8.ldm、stmldm:读内存，写入多个寄存器。stm:把多个寄存器的值写入内存。ldmia（increment after）：过后增加stmdb（decrement before）：预先减少 9.stmdb1stmdb sp!,&#123;fp,ip,lr,pc&#125; 这条指令中，首先假设sp=4096，那么由stmdb可知1.先减sp’=sp-4=4092;2.后存4092~4095存放pc的值；3.先减sp’=sp-4=4088;4.后存4088~4091存放lr的值；…..依次循环。其中sp!表示sp=最终的被修改的sp值4080。注：高编号寄存器存在高地址，fp、ip、sp、ls、pc的编号分别是r11、r12、r13、r14、r15。 10.ldmia1ldmia sp,&#123;fp,sp,pc&#125; 这条指令中，由ldmia可知1.先读fp=4080~4083的值即原来保存的fp；2.后增sp’=sp+4=4084;3.先读sp=4084~4087的值即原来保存的ip;4.后增sp’=sp+4=4088；…..依次循环。其中sp无!则表示修改后的地址值不存入sp。]]></content>
+      <tags>
+        <tag>随笔</tag>
+        <tag>汇编</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[判断CPU的大小端字节序]]></title>
+    <url>%2F2018%2F08%2F06%2F%E5%88%A4%E6%96%ADCPU%E7%9A%84%E5%A4%A7%E5%B0%8F%E7%AB%AF%E5%AD%97%E8%8A%82%E5%BA%8F%2F</url>
+    <content type="text"><![CDATA[小端（Little endian)：低字节存在内存的低地址中，高字节存在内存的高地址中。大端（Big endian）：低字节存在内存的高地址中，高字节存在内存的低地址中。 主机序和网络字节序 两台主机之间通过TCP/IP协议进行通信的时候，在向对方发送报文前，都需要调用相应的函数把自己的主机序（Little endian）模式转换成网络序（Big endian）模式;同样，在接收到对方的报文信息后，都需要将网络序转换成主机序，即将报文从Big endian转换成Little endian。 Little endian优点：强制转换数据型不需要再调整字节。Big endian优点：有符号数，其字节最高位不仅表示数值本身，还起到了符号的作用。 1234567891011#include &lt;stdio.h&gt;int main()&#123; int a = 0x12345678; char *p; p = ( char *)&amp;a; if (*p == 0x12) printf("Big endian\n"); else printf("Little endian\n");&#125;]]></content>
+      <tags>
+        <tag>随笔</tag>
+        <tag>字节序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[如何在github上创建个人博客]]></title>
+    <url>%2F2018%2F08%2F01%2F%E5%A6%82%E4%BD%95%E5%9C%A8github%E4%B8%8A%E5%88%9B%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2F</url>
+    <content type="text"><![CDATA[&emsp;&emsp;因缘巧合之下看到有人利用博客记录每天的学习笔记，觉得这也不失为一个学习提升自己的好方式，希望能借此激励自己每天持续学习和思考。于是看了很多网上的教程做准备，进行第一次搭建个人博客，写下本文总结搭建的过程以及遇到的一些问题。&emsp;&emsp;本文主要目的是快速搭建，适合那些只是用来记录一些东西，不想做太多折腾的小白。 一、前言先说下自己搭建博客的大致流程： 登录GitHub，创建仓库。 在pc上安装Git，node.js，Hexo环境。 博客配置和主题优化（按需配置）。 绑定自己的域名（可选）。 二、准备工作1. 创建GitHub仓库&emsp;&emsp;登录GitHub账号（注册请自己查找网上教程），右上角用户头像处选择your repositories点击new创建一个仓库，注意：仓库名的格式，必须是yourusername.github.io； 2. Git安装与配置2.1 Git安装Windows：git-for-windows下载完成后，具体安装过程见Git 中文详细安装教程 这里推荐一个神器：cmder，功能强大，比windows自带的cmd好用很多。（注：cmder最好解压放在磁盘的根目录下） 2.2 Git配置Git安装完成后，打开Git Bash，第一次打开需要设置username和email；12git config --global user.name "YiYunC" #与注册的账号邮箱一致;git config --global user.email "chenyiyun940920@gmail.com" 在F盘新建一个名为blog的文件夹作为仓库，在命令行里输入：12cd /f/blog #进入F盘的blog文件夹;git init #初始化当前文件夹作为本地仓库(生成.git文件夹); 2.3 配置SSH keys先检查下电脑用户主目录下，有没有.ssh文件夹，看看有没有id_rsa和id_rsa.pub，有的话直接跳到下一步。如果没有，在Git Bash里输入命令，生成新的SSH Key:123ssh-keygen -t rsa -C "chenyiyun940920@gmail.com"Generating public/private rsa key pair.Enter file in which to save the key (/Users/your_user_directory/.ssh/id_rsa):&lt;回车就好&gt; 接下来就是设置加密密码串（6位），可以不设置。ssh key设置成功的界面忘记截图了。上述步骤以及添加SSH Key到GitHub的步骤详见利用Github免费搭建个人主页(个人博客) 3.Node.js安装到Nodejs官网下载，默认安装即可。 4.Hexo安装与配置4.1 Hexo安装1npm install -g hexo-cli 4.2 Hexo配置1234cd /f/bloghexo init bloghexo g #启动本地服务器hexo s #在浏览器输入http://localhost:4000/就可以看见网页和模板了 注意：进入“http://localhost:4000/”页面前，Git Bash里不要按下ctrl+c和ctrl+v，不然该页面将停止加载。 三、博客配置和主题优化1. 博客配置&emsp;&emsp;用文本编辑器打开blog根目录下的_config.yml文件，我自己用的是Notepad++，其实用Sublime Text会更好，因为Sublime Text默认打开格式是UTF-8编码，而Notepad++还需要手动设置；一般博客中文出现乱码，大多数是因为配置文件的格式不是URF-8编码。 打开之后，必须要改的有：注：每个：后面必须有一个空格；还有language的设定是由主题决定，后面会讲解。 &emsp;&emsp;url填写的地址在GitHub里刚才新建的仓库里，点击setting，拉到下面可以看见GitHub Pages里有域名地址，一般默认是GitHub提供的二级域名github.io，这里我已经更换了.me域名。 最后这里的一段很重要，改成我图片上的，repo上的地址就是你的GitHub的仓库地址。 &emsp;&emsp;这里说一下，博客根目录下的_config.yml文件叫做站点配置文件；而主题目录里的_config.yml文件叫做主题配置文件。 2. 主题配置&emsp;&emsp;我用的是Next主题，其风格简约并且功能比较完善，加上时间仓促所以我选择了这个，但是也花了我好多时间来配置完善一些基础功能。还有一些好看的主题如yilia，其实有时间去配置一下，自己的博客看起来会更上一个档次，只能等我以后工作稳定了慢慢去修改了。Next主题下载并解压后，将其放在theme目录里，同时站点配置文件里设置“theme: “主题文件夹的名字”,就能切换到相应主题，主题配置文件里可以设置的有很多，就不一一阐述了，讲几个比较偏的。 主题风格切换（共四种） 头像以及博客图标的更改 打赏的二维码 注：要设置的图片均放在主题目录里的/source/images里 这里给出我自己设置好功能尚完整的Next主题文件。 四、绑定域名&emsp;&emsp;这一步不是必须的，但是绑定域名便于记忆，如果你不愿意每次进入博客都输入github.io这样长长的二级域名，那就去买一个域名绑定下吧，反正也不是特别贵。我用的GitHub免费送的一年namecheap的.me域名，设置下DNS就可以了。其他的域名绑定设置其他教程里也有。 五、基本操作1hexo n “新文章” == hexo new “新文章” #新建文章 新建文章，生成md文件，可以用MarkdownPad2进行编辑。 每次修改完文章或主题什么的，进行以下操作：本地预览：123hexo cleanhexo generate #简化命令 hexo ghexo server #简化命令 hexo s 确认没有需要修改的地方后，上传部署：123hexo cleanhexo generate #简化命令 hexo ghexo deploy #简化命令 hexo d 其实也可以把指令集合成批处理命令;12hexo clean &amp; hexo g &amp; hexo shexo clean &amp; hexo g &amp; hexo d 注： 上传部署后，博客并不是马上就能更新的，需要等待一段时间 &emsp;&emsp;文章需要加入图片的话，可以用极简图床，免费申请七牛云，注册时有提供教程（身份检核时间挺长的）。 很生气，极简图床很有可能删库跑路了，之前文章插入的图片都没有了！！！伤心啊。所以想着能不能自建图床，看了这个人的文章，搭建了github图床，背靠github和微软总不会挂了吧。 结束语：有些东西没有详细说，以后慢慢更新。 2019.4.1更新：&emsp;&emsp;电脑之前换了固态，加上换工作，生活所迫，很长一段时间没有来管理博客，这样就要考虑到换电脑后个人博客应该如何维护。由于之前自己有在github创建备份分支backup，所以接下来操作很简单。 暂待更新…….结束语：有些东西没有时间详细说了，以后慢慢更新，并且很多博客写得比我好多了，下面给出一些参考文章，都是会用到的东西。 参考文章： 如何在github创建个人博客？ GitHub+Hexo搭建及优化 利用Github免费搭建个人主页(个人博客) Hexo的Next主题详细配置 hexo的next主题个性化教程:打造炫酷网站 【工具】用hexo搭建博客 Hexo | （二）Next主题个性化设置 Hexo | （三）URL优化&amp;站点提交 Hexo | （四）多机同步更新博客]]></content>
+      <tags>
+        <tag>github</tag>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+</search>

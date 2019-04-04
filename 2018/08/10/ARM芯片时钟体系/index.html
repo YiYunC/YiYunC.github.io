@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ARM芯片时钟体系 - 闲·趣</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="photo,"> 
+    <meta name="description" content="
+以前用STM32板子的时候，没有仔细看过ARM芯片的时钟体系，“拿来主义”贯彻到底，这次写篇文章来总结顺便复习下ARM芯片时钟体系的构成。
+
+一、S3C2440最近在学习嵌入式Linux开发，用的,"> 
+    <meta name="author" content="YiYunC"> 
+    <link rel="alternative" href="atom.xml" title="闲·趣" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+</head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">闲·趣</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="https://yiyunc.me"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">ARM芯片时钟体系</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">ARM芯片时钟体系</h1>
+        <div class="stuff">
+            <span>八月 10, 2018</span>
+            
+  <ul class="post-tags-list"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/ARM时钟/">ARM时钟</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/S3C2440/">S3C2440</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/裸机/">裸机</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p><img src="https://raw.githubusercontent.com/YiYunC/cloudimg/master/data/2a6a93c00e6.jpg" alt=""></p>
+<p>以前用STM32板子的时候，没有仔细看过ARM芯片的时钟体系，<strong>“拿来主义”</strong>贯彻到底，这次写篇文章来总结顺便复习下ARM芯片时钟体系的构成。</p>
+<a id="more"></a>
+<h1 id="一、S3C2440"><a href="#一、S3C2440" class="headerlink" title="一、S3C2440"></a>一、S3C2440</h1><p>最近在学习嵌入式Linux开发，用的S3C2440芯片的板子，板子外接的晶振频率为12MHz，需要通过时钟控制逻辑的PLL（锁相环）提高系统时钟。</p>
+<p>时钟控制逻辑提供了3种时钟：<br>1.FCLK用于CPU核。</p>
+<p>2.HCLK用于AHB总线上的设备（频率相对较高），H可以理解为high，如CPU核、Memory CONT.、Interrupt CONT.、LCD控制器、DMA等。<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/3215543.jpg" alt=""></p>
+<p>3.PCLK用于APB总线上的设备（频率相对较低），P可以理解为peripheral，如Watchdog、I2C、SPI、UART、SPI、GPIO等外设。</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/52372645.jpg" alt=""></h2><p>板子设有两个PLL：MPLL和UPLL。UPLL专用于USB设备，MPLL用来设置FCLK、HCLK、PCLK。</p>
+<p>在芯片手册里可以查到FCLK、HCLK、PCLK最高分别为400、136、68MHz。那么如何通过编程把12M的时钟源提高成这些新的时钟是我们接下来分析的问题。</p>
+<h2 id="1-上电复位序列图"><a href="#1-上电复位序列图" class="headerlink" title="1.上电复位序列图"></a>1.上电复位序列图</h2><p>在芯片手册可以找到一个<strong>上电复位序列图</strong>。<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/82972905.jpg" alt=""><br>仔细推敲这个图，会发现有几个特别的地方：1.刚上电，复位引脚nRESET不是马上拉到高电平；2.OM[3:2]的作用；3.Lock Time里的工作机制。</p>
+<p>查看下原理图，会发现nRESET上连接的芯片是IMP811T，网上查找芯片资料<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/22689008.jpg" alt=""></p>
+<p>所以等到板子电源稳定后复位引脚才会输出高电平。</p>
+<p><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/96230094.jpg" alt=""><br>OSC是<strong>晶体振荡器</strong>，EXTCLK是另一个引脚。而<strong>OM[3:2]</strong>其实就是一个选择器，在下图中可以看出它控制引脚OM3、OM2模式的状态。<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/73806757.jpg" alt=""><br>原理图里可以看到OM2和OM3引脚均<strong>接地</strong>，所以应该是00的模式，即选择晶振作为时钟源。</p>
+<p>引脚OM[3:2]的电平在被内部电路捕获后，PLL就准备开始工作了，Lock Time就是PLL的锁存时间（有初始值，可以由相应寄存器设定），这段时间内，FCLK停振，CPU停止工作，MPLL开始工作；过了Lock Time这段时间后，FCLK=MPLL输出的新时钟，此时CPU重新运行。</p>
+<ul>
+<li><strong>小结：OM模式，Lock Time这两个是基础的设定。</strong></li>
+</ul>
+<h2 id="2-PLL寄存器的设定"><a href="#2-PLL寄存器的设定" class="headerlink" title="2.PLL寄存器的设定"></a>2.PLL寄存器的设定</h2><p>接下来重要的是PLL的设定，主要由CLKDIVN、CAMDIVN、MPLLCON这几个寄存器来设定（UPLLCON暂时不讲）。</p>
+<p>CLKDIVN寄存器是用来设定FCLK、HCLK、PCLK这三者一些简单的比例关系，一些比较特殊的比例关系就要用到CAMDIVN寄存器。</p>
+<p>MPLLCON寄存器是设定FCLK与<strong>晶振频率（Fin）</strong>的倍数，芯片手册有相应的公式：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mpll = (<span class="number">2</span> * m * Fin) / (p * <span class="number">2</span>^S)</span><br><span class="line">m = (MDIV + <span class="number">8</span>), p = (PDIV + <span class="number">2</span>), s = SDIV</span><br></pre></td></tr></table></figure></p>
+<p>通过公式简单计算可以得到MDIV、PDIV、SDIV的值，再通过移位操作设定寄存器的值。<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-11/20349431.jpg" alt=""></p>
+<h2 id="3-CPU-bus-mode"><a href="#3-CPU-bus-mode" class="headerlink" title="3.CPU bus mode"></a>3.CPU bus mode</h2><p>芯片手册第七章看完，会看到一个NOTE:<br><img src="http://pcwv6qdfo.bkt.clouddn.com/18-8-13/53274620.jpg" alt=""></p>
+<p>这里说到当HDIVN不为0，必须执行以下指令将CPU bus mode更改成asynchronous bus mode（异步总线模式）：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MMU_SetAsyncBusMode</span><br><span class="line">mrc p15,<span class="number">0</span>,r0,c1,c0,<span class="number">0</span></span><br><span class="line">orr r0,r0,<span class="meta">#R1_nF:OR:R1_iA   //R1_nF:OR:R1_iA==0xc0000000</span></span><br><span class="line">mcr p15,<span class="number">0</span>,r0,c1,c0,<span class="number">0</span></span><br></pre></td></tr></table></figure></p>
+<p>而当HDIVN不为0且CPU bus mode是fast bus mode（快速总线模式）时，CPU工作频率将变为HCLK，不再是FCLK。</p>
+<p>下面以设置FCLK=400MHz，HCLK=400MHz，PCLK=400MHz为例子写出部分代码。</p>
+<hr>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 设定Lock Time的值-&gt;初始值 */</span></span><br><span class="line">ldr r0, =<span class="number">0x4C000000</span>    <span class="comment">//address</span></span><br><span class="line">ldr r1, =<span class="number">0xFFFFFFFF</span>    <span class="comment">//Reset Value</span></span><br><span class="line">str r1, [r0]           </span><br><span class="line"></span><br><span class="line"><span class="comment">/* 设定CPU总线模式-&gt;异步模式 */</span></span><br><span class="line">mrc p15,<span class="number">0</span>,r0,c1,c0,<span class="number">0</span></span><br><span class="line">orr r0,r0,<span class="meta">#0xc0000000  //R1_nF:OR:R1_iA</span></span><br><span class="line">mcr p15,<span class="number">0</span>,r0,c1,c0,<span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 设定CLKDIVN的值-&gt; FCLK : HCLK : PCLK = 8 : 4 : 1 */</span></span><br><span class="line">ldr r0, =<span class="number">0x4C000014</span>    <span class="comment">//address</span></span><br><span class="line">ldr r1, =<span class="number">0x5</span>           <span class="comment">//set Value: [3:0]=101</span></span><br><span class="line">str r1, [r0]           </span><br><span class="line"></span><br><span class="line"><span class="comment">/* 设定CLKDIVN的值-&gt;设置其他频率比例的寄存器 */</span></span><br><span class="line"><span class="comment">//ldr r0, =0x4C000018    //address</span></span><br><span class="line"><span class="comment">//ldr r1, =0x           //set Value</span></span><br><span class="line"><span class="comment">//str r1, [r0] </span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 设定MPLLCON的值输出PLL</span></span><br><span class="line"><span class="comment"> * Mpll = (2 * m * Fin) / (p * 2^S)</span></span><br><span class="line"><span class="comment"> * m = (MDIV + 8), p = (PDIV + 2), s = SDIV</span></span><br><span class="line"><span class="comment"> * 查表计算得MDIV = 92, PDIV = 1, SDIV = 1</span></span><br><span class="line"><span class="comment"> * Output Frequency = 400 MHz</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">ldr r0, =<span class="number">0x4C000004</span>              <span class="comment">//address</span></span><br><span class="line">ldr r1, =(<span class="number">92</span>&lt;&lt;<span class="number">12</span>)|(<span class="number">1</span>&lt;&lt;<span class="number">4</span>)|(<span class="number">1</span>&lt;&lt;<span class="number">0</span>)  <span class="comment">//set Value</span></span><br><span class="line">str r1, [r0]</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 一旦设置PLL,就会锁定LOCK TIME直到PLL输出稳定</span></span><br><span class="line"><span class="comment"> * 然后CPU工作于新的频率FCLK</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+<h1 id="二、STM32F103"><a href="#二、STM32F103" class="headerlink" title="二、STM32F103"></a>二、STM32F103</h1><p>以前用的STM32板子芯片是STM32F103VET6,其时钟的配置全都可以调用固件库轻易完成。<br>我们可以看看STM32的官方手册里，有芯片时钟体系的整体框图，</p>
+<hr>
+<p>持续更新中……….</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        <li title='0' data-url='http://fs.open.kugou.com/3ccbd5b3c50be0fbfd6e24aa0e2c5fdb/5ca4368f/G011/M01/13/00/q4YBAFT6DhCAaLRzADIFZXM-in8160.mp3'></li>
+                    
+                </ul>
+            
+        </div>
+        
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
